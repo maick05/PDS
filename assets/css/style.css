@@ -1,0 +1,96 @@
+body 
+{
+  background: url('../img/outros/background.jpg');
+}
+    
+body > .grid 
+{
+  height: 100%;
+}
+
+.column 
+{
+  max-width: 450px;
+}
+
+.t1
+{
+  color: black;
+  float: left;
+  font-size: 80%;
+  margin-bottom: 5%;
+}
+
+.l1
+{
+  color: #0064b5;
+}
+
+.campo_home
+{
+  margin-top: 0;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.home_top
+{
+  margin-top: 1em;
+}
+
+.home_left
+{
+  margin-top: 0.5em;
+}
+
+.label_right
+{
+  font-weight: bold;
+  display: none;
+}
+
+.label_left
+{
+  font-size: 0.92857143em;
+  font-weight: bold;
+}
+
+.label_home
+{
+  font-size: 0.92857143em;
+  font-weight: bold;
+}
+
+@media only screen and (min-width: 768px) 
+{
+
+  .campo_home
+  {
+    margin-top: 0;
+  }
+
+  .label_home
+  {
+    display: none;
+  }
+
+  .label_left
+  {
+    float: left;
+    width: 51%;
+  }
+
+  .label_right
+  {
+    display: inline-block;
+  }
+
+  #date_home
+  {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 420px) 
+{
+}
