@@ -5,7 +5,6 @@ class CadastroController extends CI_Controller
 {
 	public function cadastrar_usuario()	  //Cadastra o usuario
 	{
-	{
 		$usuario = $this->input->post("usuarios");
 		$this->UsuariosModel->inserirUsuario($usuario);
 		$usuario_logado = $this->UsuariosModel->retornaUsuario('email', $usuario['email']);
@@ -21,7 +20,7 @@ class CadastroController extends CI_Controller
 	public function logar($usuario)		// Método de login
 	{
 		$this->session->set_userdata("usuario_logado" , $usuario);
-		$this->load->view('estrutura/home');
-		//$this->load->template('estrutura/index', '', '');
+		$dados = array('cadastro' => true);
+		$this->load->template('estrutura/home', '', $dados);
 	}
 }

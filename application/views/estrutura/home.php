@@ -6,30 +6,39 @@
   <script src="<?php echo base_url('assets/js/jquery-3.1.1.min.js'); ?>"></script>   <!-- JQuery Semantic -->
   <script src="../../pds/semantic/dist/semantic.min.js"></script> <!-- JavaScript Semantic -->
   <script type="text/javascript" src="<?php echo base_url('assets/js/valida_home.js'); ?>"></script>   <!-- Valida Formulários -->
+  <script type="text/javascript" src="<?php echo base_url('assets/js/validacoes.js'); ?>"></script>   <!-- Valida Formulários -->
 <head>
 </head>
 
 <body>
 <script>
-
- $(document).ready(function(){
-    $('.ui.modal').modal('show');
-});
+<?php
+  if ($cadastro)
+  {
+?>
+    $(document).ready(function(){
+      $('#modal_home').modal('show');
+    });
+<?php
+  }
+?>
 </script>
 
 <style type="text/css">
 </style>
-
-  <div class="ui modal">   
+  <div id="modal_home" class="ui modal">   
     <div class="header">
       Complete seu cadastro
     </div>
     <div class="image content">
-      <div class="ui medium image">
-        <img src="https://semantic-ui.com/images/avatar2/large/rachel.png">
+      <div id="div_img_home" class="ui medium image" style="">
+        <label style="" id="" for="btn_img_home">
+          <img id="label_img_home" src="../../pds/assets/img/usuarios/user_leg.jpg">
+        </label>
       </div>
-      <div style="width: 100%" class="description">
-        <form class="ui form">
+      <div style="" id="desc_home" class="description">
+        <form id="form_home" class="ui form" action="<?php echo site_url('salvar_foto'); ?>" enctype="multipart/form-data" method="POST">
+          <input name="foto" type="file" accept="image/png, image/jpeg, image/jpg" id="btn_img_home" multiple>
           <div class="field">
             <div class="label_home_desk">
               <div class="label_left">
@@ -56,53 +65,56 @@
           <div class="two fields">
             <div class="field">
               <label>Estado</label>
-              <select class="ui fluid dropdown">
-                <option value="">Estado</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
+              <select style="" id="estado_select" class="ui fluid dropdown">
+                <option value="" selected disabled>Estado</option>
               </select>
             </div>
             <div class="field">
               <label>Cidade</label>
-              <div class="ui fluid search selection dropdown">
-                <input type="hidden" name="country">
-                <i class="dropdown icon"></i>
-                <div class="default text">Selecione o estado</div>
-                <div class="menu">
-            <div class="item" data-value="eh"><i class="eh flag"></i>Western Sahara</div>
-            <div class="item" data-value="ye"><i class="ye flag"></i>Yemen</div>
-            <div class="item" data-value="zm"><i class="zm flag"></i>Zambia</div>
-            <div class="item" data-value="zw"><i class="zw flag"></i>Zimbabwe</div>
-          </div>
-               </div>
+              <select id="cidade_select" class="ui fluid dropdown">
+                <option value="" selected disabled>Selecione o estado</option>
+              </select>
             </div>
           </div>
           <div class="field">
             <div class="label_home_desk">
               <div class="">
-                <label style="font-weight: bold; font-size: 0.92857143em;">Data de Nascimento</label>
+                <label id="data_label" style="">Data de Nascimento</label>
               </div>
             </div>
             <div class="fields">
               <div id="date_home" style="" class="ui left icon input campo_home home_right">
-                <input type="date" placeholder="Telefone">
+                <input id="input_data" type="date" placeholder="">
                 <i class="calendar icon"></i>
               </div>
             </div>
+            <center>
+              <div style="" id="msg_data" class="ui pointing red basic label">
+                    <span id="texto_data">Data inválida</span>
+              </div>
+            </center>
           </div>
         </form>
       </div>
     </div>
     <div class="actions">
-      <div class="ui blue deny button">
+      <div id="btn_ignorar" class="ui blue deny button">
         Ignorar
       </div>
-      <div class="ui positive right labeled icon button">
+      <div style="" id="btn_concluir" class="ui right denny green labeled icon button">
         Concluir
         <i class="checkmark icon"></i>
       </div>
+    </div>
+  </div>
+
+  <div id="msg_home" class="ui tiny modal">
+    <div class="header">Perfil Cadastrado</div>
+    <div class="content">
+      <p>Seus dados foram cadastrados com sucesso!</p>
+    </div>
+    <div class="actions">
+      <div class="ui positive button">Ok</div>
     </div>
   </div>
 </body>

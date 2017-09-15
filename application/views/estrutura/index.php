@@ -1,122 +1,62 @@
-<!DOCTYPE html>
-<html>
+<link rel="stylesheet" type="text/css" href="../../pds/semantic/dist/semantic.css">      <!-- Estilo Semantic -->
+  <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/style.css'); ?>">  <!-- Estilo CSS -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />  <!-- Tag para compatibilidade com navegadores -->             
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">   <!-- Tag para deixar site responsivo -->
+  <script src="<?php echo base_url('assets/js/jquery-3.1.1.min.js');?>"></script>   <!-- JQuery Semantic -->
+  <script src="semantic/dist/semantic.min.js"></script> <!-- JavaScript Semantic -->
+  <script type="text/javascript" src="<?php echo base_url('assets/js/valida_home.js'); ?>"></script>   <!-- Valida Formulários -->
+  <script type="text/javascript" src="<?php echo base_url('assets/js/validacoes.js'); ?>"></script>   <!-- Valida Formulários -->
 <head>
-	<title>403 Forbidden</title>
-
-	<link rel="stylesheet" type="text/css" href="../../pds/semantic/dist/semantic.min.css">
-	<meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-	<script src="../../pds/semantic/dist/semantic.min.js"></script>
-
-	<style type="text/css">
-    body {
-      background-color: #DADADA;
-    }
-    body > .grid {
-      height: 100%;
-    }
-    .image {
-      margin-top: -100px;
-    }
-    .column {
-      max-width: 450px;
-    }
-  </style>
-  <script>
-  $(document)
-    .ready(function() {
-      $('.ui.form')
-        .form({
-          fields: {
-            email: {
-              identifier  : 'email',
-              rules: [
-                {
-                  type   : 'empty',
-                  prompt : 'Please enter your e-mail'
-                },
-                {
-                  type   : 'email',
-                  prompt : 'Please enter a valid e-mail'
-                }
-              ]
-            },
-            password: {
-              identifier  : 'password',
-              rules: [
-                {
-                  type   : 'empty',
-                  prompt : 'Please enter your password'
-                },
-                {
-                  type   : 'length[6]',
-                  prompt : 'Your password must be at least 6 characters'
-                }
-              ]
-            }
-          }
-        })
-      ;
-    })
-  ;
-  </script>
+<meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title></title>
 </head>
 <body>
-	<div class="ui middle aligned center aligned grid">
-	  <div class="column">
-	    <h2 class="ui teal image header">
-	      <img src="assets/images/logo.png" class="image">
-	      <div class="content">
-	        Log-in to your account
-	      </div>
-	    </h2>
-	    <form class="ui large form">
-	      <div class="ui stacked segment">
-	        <div class="field">
-	          <div class="ui left icon input">
-	            <i class="user icon"></i>
-	            <input type="text" name="email" placeholder="E-mail address">
-	          </div>
-	        </div>
-	        <div class="field">
-	          <div class="ui left icon input">
-	            <i class="lock icon"></i>
-	            <input type="password" name="password" placeholder="Password">
-	          </div>
-	        </div>
-	        <div class="ui fluid large teal submit button">Login</div>
-	      </div>
-	      <div class="ui error message"></div>
-	    </form>
-	    <div class="ui message">
-	      New to us? <a href="#">Sign Up</a>
-	    </div>
-	    <div class="ui labeled button" tabindex="0">
-	    <button class="ui loading button">Loading</button>
-<button class="ui basic loading button">Loading</button>
-<button class="ui primary loading button">Loading</button>
-<button class="ui secondary loading button">Loading</button>
-  <div class="ui red button">
-    <i class="heart icon"></i> Like
-  </div>
-  <a class="ui basic red left pointing label">
-    1,048
+<div style="" class="ui massive secondary pointing menu" id="menu_fixo">
+  <a style="" class="item" id="item_fixed">
+    <button class="menu-abrir"></button>
   </a>
-</div>
-<div class="ui labeled button" tabindex="0">
-  <div class="ui basic blue button">
-    <i class="fork icon"></i> Forks
-  </div>
-  <a class="ui basic left pointing blue label">
-    1,048
+  <a style="" class="item" id="item_fixed">
+    MyTour
   </a>
+  <div class="right menu">
+    <a style="" class="ui item active" id="item_fixed" href="<?php echo site_url('meu_perfil');?>">
+      Meu Perfil
+    </a>
+    <a style="" class="ui item" id="item_fixed">
+      Sair
+    </a>
+  </div>
 </div>
-	  </div>
-	</div>
+
+<div style="" class="ui inverted vertical pointing menu" id="menu_lateral">
+  <a class="item">
+    <i style="" class="home icon" id="icon_index"></i>
+    Página Inicial
+  </a>
+  <a class="item" href="<?php echo site_url('buscar_excursoes');?>">
+    <i style="" class="bus icon" id="icon_index"></i>
+    Buscar Excursões  
+  </a>
+  <a class="item" href="<?php echo site_url('add_excursao');?>">
+    <i style="" class="home icon" id="icon_index"></i>
+    Criar Excursão
+  </a>
+  <a class="item">
+    <i style="" class="info icon" id="icon_index"></i>
+    Sobre
+  </a>
+  <a class="item">
+    <i style="" class="phone icon" id="icon_index"></i>
+    Contato
+  </a>
+  <span class="item">
+  </span>
+</div>
+<content>
+<div style="background: white;margin-left: 15em; padding: 5em; min-height: 100%" id="divs">
+
+
 </body>
 </html>

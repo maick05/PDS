@@ -61,8 +61,29 @@ body > .grid
   font-weight: bold;
 }
 
+div#div_img_home
+{
+  width: 245px;
+}
+
+#label_img_home
+{
+  cursor: pointer;
+}
+
+input#btn_img_home
+{
+  display: none;
+}
+
+
+
 @media only screen and (min-width: 768px) 
 {
+  #header_perfil
+  {
+    width: 102.3%;
+  }
 
   .campo_home
   {
@@ -89,8 +110,186 @@ body > .grid
   {
     width: 50%;
   }
+
+  div#msg_data
+  {
+    margin-top: -0.25em;
+  }
+
+  #menu_lateral
+  {
+    position: fixed; 
+    height: 100%;
+    left: 0;
+    display: block;
+    margin-top: 3.55em;
+  }
+
+  #menu_ativo
+  {
+    position: fixed; 
+    height: 100%;
+    left: 0;
+    display: block;
+    margin-top: 3.55em;
+  }
+
+  .menu-abrir,
+  .menu-fechar 
+  {
+      display: none;
+  }
 }
 
-@media only screen and (min-width: 420px) 
+div#btn_concluir 
 {
+  background-color: #21BA45;
+  color: #FFFFFF;
+  text-shadow: none;
+  background-image: none;
+}
+
+input#input_data 
+{
+   margin-top: 0.2em;
+}
+
+div#desc_home
+{
+  width: 100%;
+}
+
+#data_label
+{
+  font-weight: bold; 
+  font-size: 0.92857143em; 
+  margin-bottom: 1em;
+}
+
+#div_esq_senha
+{
+  text-align: left; 
+  margin-top: 0.5em;
+}
+
+#div_esq_senha:hover
+{
+  text-decoration: underline;
+}
+
+.ui.pointing.menu
+{
+  margin: 0;
+}
+
+#icon_index
+{
+  float: left; 
+  margin-right: 1em;
+}
+
+#item_fixed
+{
+  color: white;
+}
+
+#menu_fixo
+  {
+    background:#0064b5;
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+  }
+
+@media only screen and (max-width: 767px) 
+{
+  #menu_lateral
+  {
+    position: fixed; 
+    height: 100%;
+    z-index: 1; 
+    left: -90%;
+    transition: left 0.9s ease-out;
+    display: block;
+    margin-top: 3.55em;
+  }
+
+  #menu_lateral:after
+  {
+    position: fixed; 
+    height: 100%;
+    z-index: 1; 
+    left: -90%;
+    transition: left 0.9s ease-out;
+    display: none;
+    margin-top: 3.55em;
+  }
+   
+  div#menu_ativo 
+  {
+      height: 93.5%;
+      left: 0;
+      margin-top: 3.55em;
+  }
+
+
+  #menu-ativo:after 
+  {
+    display: block;
+    position: fixed;
+    left: 0;
+    height: 93.5%;
+    transition: left 0.9s ease-out;
+    margin-top: 3.55em;
+    
+  }  
+
+  p::html
+  {
+    content: "";
+        display: block;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+
+        background: rgba(0,0,0,0.4)
+  }
+
+  .menu-abrir,
+  .menu-fechar 
+  {
+      background: none;
+      color:white;
+      border: 0;
+      outline: 0;
+      -webkit-appearance: none;
+      font-size: 1.6em;
+      text-indent: -999em;
+      height: 0;
+      width:.65em;
+      padding-top:.125em;
+      border-top: .375em double #000;
+      border-bottom: .125em solid #000;
+      vertical-align: middle;   
+  }
+}
+
+
+#desc_perfil
+{
+  margin-left: 20em; 
+  width: 80%;
+}
+
+#img_perfil
+{
+  float: left;
+}
+
+#div_date
+{
+  
 }

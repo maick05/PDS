@@ -10,7 +10,6 @@ class MY_Loader extends CI_loader {
 		{
 			$this->view("estrutura/index.php", $estrutura);
 			$this->view($nome, $dados);
-			$this->view("estrutura/footer.php");
 		}
 		else
 		{

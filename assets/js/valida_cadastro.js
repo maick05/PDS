@@ -23,7 +23,10 @@ $(document).ready(function()
 
 	$( "#input_email" ).on('change', function(e)		// Função para quando mudar o contéudo do campo email
 	{
-		validaEmail(false);
+		if (!IsEmpty(input_email, msg_email, span_email, false, false)) 
+		{
+			validaEmail(false);
+		}
 	});
 
 	$( "#input_senha" ).on('change', function(e)		// Função para quando mudar o contéudo do campo senha
@@ -35,9 +38,9 @@ $(document).ready(function()
 	{
 		IsSubmit = false;
 
-   		IsEmpty(input_nome, msg_nome, span_nome, false);	
+   		IsEmpty(input_nome, msg_nome, span_nome, false, true);	
    		
-   		if (!IsEmpty(input_email, msg_email, span_email, false))
+   		if (!IsEmpty(input_email, msg_email, span_email, false, true))
    		{
    			validaEmail(false);
    			IsSubmit = true;
@@ -47,7 +50,7 @@ $(document).ready(function()
    			IsSubmit= false; 
    		}
 
-   		if (!IsEmpty(input_senha, msg_senha, span_senha, true)) 
+   		if (!IsEmpty(input_senha, msg_senha, span_senha, true, true)) 
    		{
    			if (validaSenha() && IsSubmit) 
    			{
@@ -56,7 +59,7 @@ $(document).ready(function()
    		}
   	});	
 
-  	function IsEmpty(input, msg, span, isPass)	// Faz a validacao dos campos se eles estao vazios
+  	function IsEmpty(input, msg, span, isPass, isClick)	// Faz a validacao dos campos se eles estao vazios
 	{
 		if (input.value) 	//Condicao se tiver algo escrito no campo
 		{
@@ -69,8 +72,16 @@ $(document).ready(function()
 		}
 		else 
 		{
-			msg.style.display = "block";
-			span.html(txt_vazio);	// Escreve a mensagem de texto vazio
+			if (isClick)
+			{
+				msg.style.display = "block";
+				span.html(txt_vazio);	// Escreve a mensagem de texto vazio
+			}
+			else
+			{
+				msg.style.display = "none";	
+			}
+			
 			if (isPass)		//Condição se o campo for o de senha
 			{
 				botao.style.marginTop = "3.5em";	
