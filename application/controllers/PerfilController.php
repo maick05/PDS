@@ -23,7 +23,7 @@ class PerfilController extends CI_Controller
 			{
 				$usuario = $this->input->post("usuarios");
 				$usuario['url_foto'] = $retorno;
-				$usuario['email'] = $this->session->userdata('usuario_logado')['email'];;
+				$usuario['email'] = $this->session->userdata('usuario_logado')['email'];
 				$this->UsuariosModel->atualizarPerfil($usuario);
 				$this->session->set_userdata("usuario_logado" , $usuario);
 				$this->meu_perfil();
@@ -83,7 +83,7 @@ class PerfilController extends CI_Controller
 		{
 			if ($this->upload->display_errors() == "<p>You did not select a file to upload.</p>")
 			{
-				return "igual";
+				return "igual";  
 			}
 			else
 			{

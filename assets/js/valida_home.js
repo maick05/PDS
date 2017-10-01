@@ -17,7 +17,7 @@ $(document).ready(function()
 	{
 		if (verificaData(input_data))
 		{
-			concluir();
+			form_conc.submit();
 		}
 
   	});	

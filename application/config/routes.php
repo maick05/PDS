@@ -19,6 +19,13 @@ $route['add_excursao'] = 'IndexController/go_add_excursao';
 $route['buscar_excursoes'] = 'IndexController/go_buscar_excursoes';
 $route['pesquisar_excursoes'] = 'BuscarExcursoesController/pesquisar_excursoes';
 $route['criar_excursao'] = 'AddExcursaoController/criar_excursao';
+$route['ver_detalhes_excursao/(:any)'] = 'BuscarExcursoesController/ver_detalhes_excursao/$1';
+$route['inscrever_se'] = 'DetalhesExcursaoController/inscrever_se';
+$route['cancelar_inscricao'] = 'DetalhesExcursaoController/cancelar_inscricao';
+$route['confirmar_inscricao'] = 'DetalhesExcursaoController/confirmar_inscricao';
+$route['pagseguro'] = 'PagSeguroController/abrir_pagamento';
+$route['verificar_pagamento'] = 'PagSeguroController/verificar_pagamento';
+$route['logout'] = 'IndexController/logout';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

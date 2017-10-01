@@ -35,6 +35,7 @@ $(document).ready(function()
 	txt_vazio = "Preencha esse campo por favor";	// Texto para campo vazio
 	txt_email_existe = "Esse email já está sendo usado, por favor insira um email diferente";	// Texto para email que já existe
 	txt_email_invalido = "Email invalido"; //Texto para email invalido
+	txt_data_menor = "Data inferior a data atual";
 
 
 	$( "#btn_criar" ).on('click', function(e)	// Função clique do botao de cadastrar
@@ -45,15 +46,18 @@ $(document).ready(function()
 			{
 				if (!IsEmpty(input_estado, msg_estado, span_estado, false, true))
 				{
-					if(!IsEmpty(input_data, msg_data, span_data, false, true))
+					if(!IsEmpty(input_data, msg_data, span_data, false, true) && verificaData(input_data))
 					{					
 						if (!IsEmpty(input_horario, msg_horario, span_horario, false, true))
 						{
-							if (!IsEmpty(input_vagas, msg_vagas, span_vagas, false, true))
+							if (!IsEmpty(input_vagas, msg_vagas, span_vagas, false, true) && verificaVaga(input_vagas))
 							{
-								if (!IsEmpty(input_valor, msg_valor, span_valor, false, true))
+								if (!IsEmpty(input_valor, msg_valor, span_valor, false, true) && verificaValor(input_valor))
 								{
-									form_add.submit();
+									if (IsEmail(input_email))
+									{
+										form_add.submit();
+									}
 								}
 							}
 						}		
@@ -68,7 +72,7 @@ $(document).ready(function()
 		if (input.value) 	//Condicao se tiver algo escrito no campo
 		{
 			msg.style.display = "none";		
-			if (isPass)		//Condição se o campo for o de senha
+			if (isPass)	
 			{
 				botao.style.marginTop = "0";
 			}
@@ -86,7 +90,7 @@ $(document).ready(function()
 				msg.style.display = "none";	
 			}
 			
-			if (isPass)		//Condição se o campo for o de senha
+			if (isPass)	
 			{
 				botao.style.marginTop = "3.5em";	
 			}
@@ -95,24 +99,94 @@ $(document).ready(function()
 		}
 	}	
 
-  	$.post("listar_estados", function(data, status)
-        {
-          result = $.parseJSON(data);
-          result.forEach(function(e, i){
-            $('#estado_select').append('<option value="'+ e.id_estado + '">'+ e.nome + '</option>')
-          })
-     });
--
-	$('#estado_select').on('change', function(e)
+	function verificaData(campo)	
 	{
-		id_estado = this.value;
-		$.post("cidades_por_estado", {id:id_estado}, function(data, status)
+		if (campo.value) 
 		{
-			result = $.parseJSON(data);
-			$('#cidade_select').empty( );
-			result.forEach(function(e, i){
-				$('#cidade_select').append('<option value="'+ e.id_cidade + '">'+ e.nome + '</option>')
-			})	
-		});
-	});
+			var data_atual = new Date(Date.now());
+			var data_exc = new Date(campo.value);
+			
+			if (data_atual < data_exc) 
+			{
+				
+				msg_data.style.display = "none";
+				return true;
+			}
+			else 
+			{
+				msg_data.style.display = "block";
+				span_data.html(txt_data_menor);
+				return false;
+			}
+		}
+		else
+		{
+			msg_data.style.display = "none";
+			return true;
+		}
+	}
+
+	function verificaValor(campo)	
+	{
+		if (campo.value > 0) 
+		{
+			msg_valor.style.display = "none";
+			return true;
+		}
+		else 
+		{
+			msg_valor.style.display = "block";
+			span_valor.html("Por favor insira um valor para a excursão");
+			return false;
+		}
+	}
+
+	function verificaVaga(campo)
+	{
+		if (campo.value >= 5) 
+		{	
+			msg_vagas.style.display = "none";
+			return true;
+		}
+		else 
+		{
+			msg_vagas.style.display = "block";
+			span_vagas.html("A excursão deve possuir pelo menos 5 vagas");
+			return false;
+		}
+	}
+
+	function IsEmail(email)		// Faz validação se é um email válido
+	{
+		if (email.value) 
+		{
+			usuario = email.value.substring(0, email.value.indexOf("@"));
+			dominio = email.value.substring(email.value.indexOf("@")+ 1, email.value.length);
+			if ((usuario.length >=1) &&
+			    (dominio.length >=3) && 
+			    (usuario.search("@")==-1) && 
+			    (dominio.search("@")==-1) &&
+			    (usuario.search(" ")==-1) && 
+			    (dominio.search(" ")==-1) &&
+			    (dominio.search(".")!=-1) &&      
+			    (dominio.indexOf(".") >=1)&& 
+			    (dominio.lastIndexOf(".") < dominio.length - 1)) 
+			{
+				msg_email.style.display = "none";
+				return true;
+			}
+			else
+			{
+				msg_email.style.display = "block";
+				span_email.html(txt_email_invalido);
+				return false;
+			}
+		}
+		else
+		{
+			msg_email.style.display = "block";
+			span_email.html(txt_email_invalido);
+			return true;
+		}
+   	}
 });

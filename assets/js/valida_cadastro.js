@@ -37,13 +37,14 @@ $(document).ready(function()
 	$( "#btn_cadastrar" ).on('click', function(e)	// Função clique do botao de cadastrar
 	{
 		IsSubmit = false;
+		nome = false;
 
-   		IsEmpty(input_nome, msg_nome, span_nome, false, true);	
+   		nome = !(IsEmpty(input_nome, msg_nome, span_nome, false, true));	
    		
    		if (!IsEmpty(input_email, msg_email, span_email, false, true))
    		{
    			validaEmail(false);
-   			IsSubmit = true;
+   			IsSubmit = nome;
    		}
    		else
    		{

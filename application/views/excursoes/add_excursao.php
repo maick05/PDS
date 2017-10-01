@@ -1,6 +1,50 @@
 
 <script type="text/javascript" src="<?php echo base_url('assets/js/validaAddExcursao.js'); ?>"></script>   <!-- Valida Formulários -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/cidade_estado.js'); ?>"></script> 
+<script type="text/javascript">
+$(document).ready(function()
+{
+<?php
+    if(isset($usuario_logado['id_estado']))
+    {
+?>      $.post("listar_estados", function(data, status)
+        {
+          result = $.parseJSON(data);
+          result.forEach(function(e, i){
+            $('#estado_select').append('<option value="'+ e.id_estado + '">'+ e.nome + '</option>')
+          })
+          $("#estado_select").val("<?php echo $usuario_logado['id_estado'];?>");  
+        });
+
+        
+
+        id_estado = <?php echo $usuario_logado['id_estado'];?>;
+        $.post("cidades_por_estado", {id:id_estado}, function(data, status)
+        {
+            result = $.parseJSON(data);
+            $('#cidade_select').empty( );
+            result.forEach(function(e, i){
+                $('#cidade_select').append('<option value="'+ e.id_cidade + '">'+ e.nome + '</option>')
+            }) 
+            $("#cidade_select").val("<?php echo $usuario_logado['id_cidade'];?>"); 
+        });
+<?php
+    }
+    else
+    {
+?>
+      $.post("listar_estados", function(data, status)
+        {
+          result = $.parseJSON(data);
+          result.forEach(function(e, i){
+            $('#estado_select').append('<option value="'+ e.id_estado + '">'+ e.nome + '</option>')
+          }) 
+        });
+<?php
+    }
+?>    
+});
+</script>
 <form  id="form_criar" class="ui form" style="" method="POST" action="<?php echo site_url('criar_excursao'); ?>" enctype="multipart/form-data"> 
 <div>
   <h2 id="" class="ui dividing header">Criar Excursão</h2>
@@ -146,7 +190,7 @@
               <label>Telefone para Contato</label>
               <div class="ui left icon input">
                 <input autocomplete="off" id="celular" type="text" placeholder="Telefone" name="excursoes[contato]"
-                value="">
+                value="<?php echo $usuario_logado['telefone']; ?>">
                 <i class="phone icon"></i>
               </div>
             </div>
@@ -154,8 +198,8 @@
             <div class="field">
               <label>Email para Contato</label>
               <div class="ui left icon input">
-                <input autocomplete="off" id="celular" type="email" placeholder="Email" name="excursoes[contato_email]"
-                value="">
+                <input autocomplete="off" type="text" placeholder="Email" name="excursoes[contato_email]"
+                id="input_email"  value="<?php echo $usuario_logado['email']; ?>">
                 <i class="mail icon"></i>
               </div>
               <div style="" id="msg_email" class="ui pointing red basic label">

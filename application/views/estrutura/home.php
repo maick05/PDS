@@ -7,6 +7,7 @@
   <script src="../../pds/semantic/dist/semantic.min.js"></script> <!-- JavaScript Semantic -->
   <script type="text/javascript" src="<?php echo base_url('assets/js/valida_home.js'); ?>"></script>   <!-- Valida Formulários -->
   <script type="text/javascript" src="<?php echo base_url('assets/js/validacoes.js'); ?>"></script>   <!-- Valida Formulários -->
+  <script type="text/javascript" src="<?php echo base_url('assets/js/cidade_estado.js'); ?>"></script>  
 <head>
 </head>
 
@@ -37,8 +38,9 @@
         </label>
       </div>
       <div style="" id="desc_home" class="description">
-        <form id="form_home" class="ui form" action="<?php echo site_url('salvar_foto'); ?>" enctype="multipart/form-data" method="POST">
-          <input name="foto" type="file" accept="image/png, image/jpeg, image/jpg" id="btn_img_home" multiple>
+        <form id="form_home" class="ui form" action="<?php echo site_url('concluir_cadastro'); ?>" enctype="multipart/form-data" method="POST">
+          <input name="url_foto" type="file" accept="image/png, image/jpeg, image/jpg" id="btn_img_home" multiple>
+          <!-- <input type="hidden" name="usuarios[id_usuario]" value="<?php echo $usuario_logado['id_usuario'];?>"> -->
           <div class="field">
             <div class="label_home_desk">
               <div class="label_left">
@@ -50,14 +52,14 @@
             </div>
             <div class="fields">
               <div class="ui left icon input campo_home home_right">
-                <input id="telefone" type="text" placeholder="Telefone">
+                <input id="telefone" type="text" placeholder="Telefone" name="usuarios[telefone]">
                 <i class="phone icon"></i>
               </div>
               <div class="label_home home_top">
                 <label class="campo_home">Celular</label>  
               </div>
               <div class="ui left icon input campo_home home_left">
-                <input id="celular" type="text" placeholder="Celular">
+                <input id="celular" type="text" placeholder="Celular" name="usuarios[celular]">
                 <i class="mobile icon"></i>
               </div> 
             </div>
@@ -65,14 +67,14 @@
           <div class="two fields">
             <div class="field">
               <label>Estado</label>
-              <select style="" id="estado_select" class="ui fluid dropdown">
-                <option value="" selected disabled>Estado</option>
+              <select style="" id="estado_select" class="ui fluid dropdown" name="usuarios[id_estado]">
+                <option value="" selected>Estado</option>
               </select>
             </div>
             <div class="field">
               <label>Cidade</label>
-              <select id="cidade_select" class="ui fluid dropdown">
-                <option value="" selected disabled>Selecione o estado</option>
+              <select id="cidade_select" class="ui fluid dropdown" name="usuarios[id_cidade]">
+                <option value="" selected>Selecione o estado</option>
               </select>
             </div>
           </div>
@@ -84,7 +86,7 @@
             </div>
             <div class="fields">
               <div id="date_home" style="" class="ui left icon input campo_home home_right">
-                <input id="input_data" type="date" placeholder="">
+                <input id="input_data" type="date" placeholder="" name="usuarios[data_nasc]">
                 <i class="calendar icon"></i>
               </div>
             </div>

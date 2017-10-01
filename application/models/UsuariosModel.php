@@ -9,14 +9,15 @@ class UsuariosModel extends CI_Model
 		$this->db->insert("usuarios", $usuario);
 	}
 
-	public function concluirCadastro($usuario, $id)	//Atualiza o cadastro do usuário
+	public function concluirCadastro($usuario)	//Atualiza o cadastro do usuário
 	{
-		$this->db->set('telefone', $this->isNull($usuario['telefone']));-
+		$this->db->set('telefone', $this->isNull($usuario['telefone']));
 		$this->db->set('celular', $this->isNull($usuario['celular']));
 		$this->db->set('id_cidade', $this->isNull($usuario['id_cidade']));
 		$this->db->set('id_estado', $this->isNull($usuario['id_estado']));
 		$this->db->set('data_nasc', $this->isNull($usuario['data_nasc']));
-		$this->db->where('id_usuario', $id);
+		$this->db->set('url_foto', $this->isNull($usuario['url_foto']));
+		$this->db->where('id_usuario', $usuario['id_usuario']);
 		$this->db->update('usuarios');
 	}
 

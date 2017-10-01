@@ -21,42 +21,66 @@ class HomeController extends CI_Controller
 
 	public function concluir_cadastro()	// Completa o cadastro do usuário
 	{
-		$usuario = array('telefone' => $this->input->post("telefone"), 'celular' => $this->input->post("celular"), 
-			'id_estado' => $this->input->post("id_estado"), 'id_cidade' => $this->input->post("id_cidade"),
-			'data_nasc' => $this->input->post("data_nasc"));
-
-		if ($this->salvar_foto())
+		$usuario = $this->input->post("usuarios");
+		$usuario['id_usuario'] = $this->session->userdata('usuario_logado')['id_usuario'];
+		$retorno = $this->salvar_foto();
+		if ( $retorno != "erro" && $retorno != "vazio") 
 		{
-			$this->UsuariosModel->concluirCadastro($usuario, $this->session->userdata('usuario_logado'));
+			$usuario['url_foto'] = $retorno;
+			$this->UsuariosModel->concluirCadastro($usuario);
 			$usuario = $this->UsuariosModel->retornaUsuario('id_usuario', $this->session->userdata('usuario_logado')['id_usuario']);
 			$this->session->set_userdata("usuario_logado" , $usuario);
+			$this->go_home();
 		}
-	}
+		else if($retorno == "vazio")
+		{
+			$usuario['url_foto'] = "";
+			$this->UsuariosModel->concluirCadastro($usuario);
+			$usuario = $this->UsuariosModel->retornaUsuario('id_usuario', $this->session->userdata('usuario_logado')['id_usuario']);
+			$this->session->set_userdata("usuario_logado" , $usuario);
+			$this->go_home();	
+		}
+		else
+		{
+			//ERRRRROOOOOOOO
+		}
+}
 
 	public function salvar_foto()
 	{
-		$foto = $this->input->post("url_foto");
+		$foto = $this->input->post('foto');
 		$usuario = $this->session->userdata('usuario_logado');
-		$name = md5($usuario['id_usuario'].$usuario['nome'].$usuario['email'].Date("d/m/Y H:i:s"));
+		$name = md5($usuario['id_usuario'].$usuario['nome'].Date("d/m/Y H:i:s"));
 
    		$configuracao = array(
    		   'upload_path' => 'assets/img/usuarios/',
-   		   'allowed_types' => 'jpg',
+   		   'allowed_types' => 'jpg|png',
    		   'file_name' => $name.'.jpg',
-   		   'max_size' => '3000'
+   		   'max_size' => '30000'
    		);
 
    		$this->upload->initialize($configuracao);
 
-   		if ($this->upload->do_upload('foto'))
+   		if ($this->upload->do_upload('url_foto'))
 		{
-			
-			return true;
+			//echo "feitooooooooooo";
+			return "assets/img/usuarios/".$name.'.jpg';
 		}
 		else
 		{
-			//echo $this->upload->display_errors();
-			return false;
+			if ($this->upload->display_errors() == "<p>You did not select a file to upload.</p>")
+			{
+				return "vazio";
+			}
+			else
+			{
+				return "erro";
+			}
 		}
+	}
+
+	function go_home()
+	{
+		$this->load->template('estrutura/home', '', '');
 	}
 }
