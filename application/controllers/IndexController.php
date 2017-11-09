@@ -21,6 +21,22 @@ class IndexController extends CI_Controller
 		$this->load->template('excursoes/buscar_excursoes', '', $dados);	
 	}
 
+	public function go_minhas_excursoes()						// Manda para a página padrão do sistema caso usuário não esteja logado
+	{	
+		$excursoes_participo = $this->ExcursoesModel->verExcursoesParticipo(false, $this->session->userdata('usuario_logado')['id_usuario']);
+		foreach ($excursoes_participo ->result() as $linha) 
+		{
+			$linha->vagas =  $this->ExcursoesModel->retornarVagas($linha->id_exc);
+		}
+		$excursoes_criei = $this->ExcursoesModel->verExcursoesCriei(false, $this->session->userdata('usuario_logado')['id_usuario']);
+		foreach ($excursoes_criei ->result() as $linha) 
+		{
+			$linha->vagas =  $this->ExcursoesModel->retornarVagas($linha->id_exc);
+		}
+		$dados = array('excursoes_participo' => $excursoes_participo, 'excursoes_criei' => $excursoes_criei);
+		$this->load->template('excursoes/minhas_excursoes', '', $dados);	
+	}
+
 	public function logout()
 	{
 		$this->session->sess_destroy();

@@ -1,11 +1,11 @@
 
-<script type="text/javascript" src="<?php echo base_url('assets/js/validaAddExcursao.js'); ?>"></script>   <!-- Valida Formulários -->
+<script type="text/javascript" src="<?php echo base_url('assets/js/valida_alterar_excursao.js'); ?>"></script>   <!-- Valida Formulários -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/cidade_estado.js'); ?>"></script> 
 <script type="text/javascript">
   $(document).ready(function()
   {
     <?php
-    if(isset($usuario_logado['id_estado']))
+    if(isset($excursao['id_estado_part']))
     {
       ?>      $.post("listar_estados", function(data, status)
       {
@@ -13,12 +13,12 @@
         result.forEach(function(e, i){
           $('#estado_select').append('<option value="'+ e.id_estado + '">'+ e.nome + '</option>')
         })
-        $("#estado_select").val("<?php echo $usuario_logado['id_estado'];?>");  
+        $("#estado_select").val("<?php echo $excursao['id_estado_part'];;?>");  
       });
 
 
 
-      id_estado = <?php echo $usuario_logado['id_estado'];?>;
+      id_estado = <?php echo $excursao['id_estado_part'];?>;
       $.post("cidades_por_estado", {id:id_estado}, function(data, status)
       {
         result = $.parseJSON(data);
@@ -26,7 +26,7 @@
         result.forEach(function(e, i){
           $('#cidade_select').append('<option value="'+ e.id_cidade + '">'+ e.nome + '</option>')
         }) 
-        $("#cidade_select").val("<?php echo $usuario_logado['id_cidade'];?>"); 
+        $("#cidade_select").val("<?php echo $excursao['id_cidade_part'];?>"); 
       });
       <?php
     }
@@ -43,18 +43,21 @@
       <?php
     }
     ?>    
+    $("#tipo_transporte").val("<?php echo $excursao['tipo_transporte'];?>");  
+    $("#categ").val("<?php echo $excursao['categoria'];?>");  
   });
 </script>
-<form  id="form_criar" class="ui form" style="" method="POST" action="<?php echo site_url('criar_excursao'); ?>" enctype="multipart/form-data"> 
+<form  id="form_alterar" class="ui form" style="" method="POST" action="<?php echo site_url('editar_excursao'); ?>" enctype="multipart/form-data"> 
   <div>
-    <h2 id="" class="ui dividing header">Criar Excursão</h2>
+    <h2 id="" class="ui dividing header">Alterar Excursão</h2>
+    <input type="hidden" name="excursao[id_excursao]" value="<?php echo $excursao['id_excursao'];?>">
     <div style="" id="" class="">
       <div class="fields">
         <div class="field" style="width: 66.66%">
           <label>Nome da Excursão*</label>
           <div class="ui left icon input">
-            <input autocomplete="off" id="input_nome" type="text" placeholder="Ex: Excursão para o Rio de Janeiro" name="excursoes[nome]"
-            value="">
+            <input autocomplete="off" id="input_nome" type="text" placeholder="Ex: Excursão para o Rio de Janeiro" name="excursao[nome]"
+            value="<?php echo $excursao['nome'];?>">
             <i class="info icon"></i>
           </div>
           <div style="" id="msg_nome" class="ui pointing red basic label">
@@ -65,7 +68,7 @@
       <div class="three fields">
         <div class="field">
           <label>Tipo de transporte*</label>
-          <select name="excursoes[tipo_transporte]" style="" id="" class="ui fluid dropdown">
+          <select name="excursao[tipo_transporte]" style="" id="tipo_transporte" class="ui fluid dropdown">
             <option value="Carro">Carro</option>
             <option value="Ônibus">Ônibus</option>
             <option value="Van">Van</option>
@@ -75,7 +78,7 @@
         </div>
         <div class="field">
           <label>Categoria*</label>
-          <select name="excursoes[categoria]" style="" id="" class="ui fluid dropdown">
+          <select name="excursao[categoria]" style="" id="categ" class="ui fluid dropdown">
             <option value="Música">Música</option>
             <option value="Esportes">Esportes</option>
             <option value="Turismo">Turismo</option>
@@ -89,8 +92,12 @@
         <div class="field" style="width: 66.66%">
           <label>Endereço de partida*</label>
           <div class="ui left icon input">
-            <input autocomplete="off" id="input_endereco" type="text" placeholder="Ex: Avenida José Bonifácio" name="excursoes[endereco_part]"
-            value="">
+            <input autocomplete="off" id="input_endereco" type="text" placeholder="Ex: Avenida José Bonifácio" name="excursao[endereco_part]"
+            value="<?php
+            if (isset($excursao['endereco_part']))
+            {
+              echo $excursao['endereco_part'];
+            }?>">
             <i class="point icon"></i>
           </div>
           <div style="" id="msg_endereco" class="ui pointing red basic label">
@@ -101,7 +108,7 @@
       <div class="three fields">
         <div class="field">
           <label>Estado*</label>
-          <select name="excursoes[id_estado_part]" style="" id="estado_select" class="ui fluid dropdown">
+          <select name="excursao[id_estado_part]" style="" id="estado_select" class="ui fluid dropdown">
             <option value="" selected disabled>Estado</option>
           </select>
           <div style="" id="msg_estado" class="ui pointing red basic label">
@@ -111,7 +118,7 @@
 
         <div class="field">
           <label>Cidade*</label>
-          <select name="excursoes[id_cidade_part]" id="cidade_select" class="ui fluid dropdown">
+          <select name="excursao[id_cidade_part]" id="cidade_select" class="ui fluid dropdown">
             <option value="" selected disabled>Selecione o estado</option>
           </select>
         </div>
@@ -125,8 +132,8 @@
           </div>
           <div class="fields">
             <div id="" style="" class="ui left icon input campo_home">
-              <input name="excursoes[data_part]" id="input_data" type="date" placeholder=""
-              value="">
+              <input name="excursao[data_part]" id="input_data" type="date" placeholder=""
+              value="<?php echo $excursao['data_part'];?>">
               <i class="calendar icon"></i>
             </div>
           </div>
@@ -145,8 +152,8 @@
           </div>
           <div class="fields">
             <div id="" style="" class="ui left icon input campo_home">
-              <input name="excursoes[horario_part]" id="input_horario" type="time" placeholder=""
-              value="">
+              <input name="excursao[horario_part]" id="input_horario" type="time" placeholder=""
+              value="<?php echo $excursao['horario_part']; ?>">
               <i class="clock icon"></i>
             </div>
           </div>
@@ -166,8 +173,8 @@
           </div>
           <div class="fields">
             <div id="" style="" class="ui left icon input campo_home">
-              <input name="excursoes[vagas_disp]" id="input_vagas" type="number" placeholder=""
-              value="">
+              <input name="excursao[vagas_disp]" id="input_vagas" type="number" placeholder=""
+              value="<?php echo $excursao['vagas_disp'];?>">
               <i class="users icon"></i>
             </div>
           </div>
@@ -186,8 +193,8 @@
           </div>
           <div class="fields">
             <div id="" style="" class="ui left icon input campo_home">
-              <input name="excursoes[valor]" id="input_valor" placeholder=""
-              value="" type="number" step="0.01" min="0">
+              <input name="excursao[valor]" id="input_valor" placeholder=""
+              value="<?php echo $excursao['valor'];?>" type="number" step="0.01" min="0">
               <i class="money icon"></i>
             </div>
           </div>
@@ -203,8 +210,15 @@
         <div class="field">
           <label>Telefone para Contato</label>
           <div class="ui left icon input">
-            <input autocomplete="off" id="celular" type="text" placeholder="Telefone" name="excursoes[contato]"
-            value="<?php echo $usuario_logado['telefone']; ?>">
+            <input autocomplete="off" id="celular" type="text" placeholder="Telefone" name="excursao[contato]"
+            value="
+            <?php
+            if (isset($excursao['contato']))
+            {
+              echo $excursao['contato'];
+            }
+            ?>
+            ">
             <i class="phone icon"></i>
           </div>
         </div>
@@ -212,25 +226,33 @@
         <div class="field">
           <label>Email para Contato</label>
           <div class="ui left icon input">
-            <input autocomplete="off" type="text" placeholder="Email" name="excursoes[contato_email]"
-            id="input_email"  value="<?php echo $usuario_logado['email']; ?>">
-            <i class="mail icon"></i>
-          </div>
-          <div style="" id="msg_email" class="ui pointing red basic label">
-            <span id="texto_email"></span>
+            <input autocomplete="off" type="text" placeholder="Email" name="excursao[contato_email]"
+            id="input_email"  value="<?php
+            if (isset($excursao['contato_email']))
+            {
+              echo $excursao['contato_email'];
+            }?>">
+              <i class="mail icon"></i>
+            </div>
+            <div style="" id="msg_email" class="ui pointing red basic label">
+              <span id="texto_email"></span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="field" style="width: 66.66%">
-        <div class="field">
-          <label>Observações</label>
-          <textarea name="excursoes[observacoes]" rows="4"></textarea>
+        <div class="field" style="width: 66.66%">
+          <div class="field">
+            <label>Observações</label>
+            <textarea name="excursao[observacoes]" rows="4"><?php
+            if (isset($excursao['observacoes']))
+            {
+              echo $excursao['observacoes'];
+            }?></textarea>
         </div>
       </div>
       <div class="actions" style="">
-        <div style="" id="btn_criar" class="ui green labeled icon large button">
-          Criar Excursão
+        <div style="" id="btn_alterar" class="ui green labeled icon large button">
+          Salvar Alterações
           <i class="check icon"></i>
         </div>
       </div> 

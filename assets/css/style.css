@@ -118,12 +118,12 @@ input#btn_img_home
 
   #menu_lateral
   {
-    position: ; 
-    height: 100%;
-    left: 0;
     display: block;
+    position: fixed;
+    left: 0;
+    height: 94%;
+    transition: left 0.9s ease-out;
     margin-top: 3.55em;
-    float: left;
   }
 
   #menu_ativo
@@ -253,7 +253,6 @@ div#desc_home
     height: 93.5%;
     transition: left 0.9s ease-out;
     margin-top: 3.55em;
-    
   }  
 
   p::html

@@ -8,17 +8,6 @@ class ExcursoesModel extends CI_Model
 		$this->db->insert("excursoes", $excursao);
 	}
 
-	public function concluirCadastro($usuario, $id)	//Atualiza o cadastro do usuário
-	{
-		$this->db->set('telefone', $this->isNull($usuario['telefone']));-
-		$this->db->set('celular', $this->isNull($usuario['celular']));
-		$this->db->set('id_cidade', $this->isNull($usuario['id_cidade']));
-		$this->db->set('id_estado', $this->isNull($usuario['id_estado']));
-		$this->db->set('data_nasc', $this->isNull($usuario['data_nasc']));
-		$this->db->where('id_usuario', $id);
-		$this->db->update('usuarios');
-	}
-
 	public function buscarExcursoes()	// Retorna a consulta de um usuário com o email e senha enviados
 	{
 		$this->db->select('excursoes.nome, endereco_part, cidades.nome as cidade_nome, estados.sigla, data_part, horario_part, vagas_disp, valor, excursoes.id_excursao');
@@ -51,12 +40,77 @@ class ExcursoesModel extends CI_Model
 		return $this->db->get()->row_array();
 	}
 
-	public function retornarUltimaExcursao()	// Retorna a consulta de um usuário com o email e senha enviados
+	public function retornarUltimaExcursao()
 	{
 		$this->db->select('*');
 		$this->db->order_by('id_excursao', 'DESC');
 		$this->db->limit(1);
 		return $this->db->get('excursoes')->row_array();
+	}
+
+	public function retornarUltimaExcursaoDoCriador($id)
+	{
+		$this->db->select('id_excursao');
+		$this->db->where('id_criador', $id);
+		$this->db->order_by('id_excursao', 'DESC');
+		$this->db->limit(1);
+		return $this->db->get('excursoes')->row_array()['id_excursao'];
+	}
+
+	public function registrarAutorizacao($id)
+	{
+		$this->db->set('pagseguro', true);
+		$this->db->where('id_excursao', $id);
+		$this->db->update('excursoes');
+	}
+
+	public function editarExcursao($excursao)
+	{
+		$this->db->set('nome', $excursao['nome']);
+		$this->db->set('tipo_transporte', $excursao['tipo_transporte']);
+		$this->db->set('categoria', $excursao['categoria']);
+		$this->db->set('endereco_part', $excursao['endereco_part']);
+		$this->db->set('id_estado_part', $excursao['id_estado_part']);
+		$this->db->set('id_cidade_part', $excursao['id_cidade_part']);
+		$this->db->set('data_part', $excursao['data_part']);
+		$this->db->set('horario_part', $excursao['horario_part']);
+		$this->db->set('vagas_disp', $excursao['vagas_disp']);
+		$this->db->set('valor', $excursao['valor']);
+		$this->db->set('contato', $excursao['contato']);
+		$this->db->set('contato_email', $excursao['contato_email']);
+		$this->db->set('observacoes', $excursao['observacoes']);
+		$this->db->where('id_excursao', $excursao['id_excursao']);
+		$this->db->update('excursoes');
+	}
+
+	public function VerExcursoesParticipo($limit, $id)
+	{
+		$this->db->select('excursoes.nome, excursoes.id_excursao as id_exc, tipo_transporte, endereco_part, cidades.nome as cidade_nome, estados.sigla, data_part, horario_part, vagas_disp, valor, usuarios.nome as nome_criador');
+		$this->db->from('excursoes');
+		$this->db->join('cidades', 'cidades.id_cidade = id_cidade_part');
+		$this->db->join('estados', 'estados.id_estado = id_estado_part');
+		$this->db->join('usuarios', 'usuarios.id_usuario = excursoes.id_criador');
+		$this->db->join('inscricoes', 'excursoes.id_excursao = inscricoes.id_excursao');
+		$this->db->where('inscricoes.id_inscrito', $id);
+		return $this->db->get();
+	}
+
+	public function VerExcursoesCriei($limit, $id)
+	{
+		$this->db->select('excursoes.nome, excursoes.id_excursao as id_exc, tipo_transporte, endereco_part, cidades.nome as cidade_nome, estados.sigla, data_part, horario_part, vagas_disp, valor');
+		$this->db->from('excursoes');
+		$this->db->join('cidades', 'cidades.id_cidade = id_cidade_part');
+		$this->db->join('estados', 'estados.id_estado = id_estado_part');
+		$this->db->where('excursoes.id_criador', $id);
+		return $this->db->get();
+	}
+
+	public function retornarVagas($id)
+	{
+		$this->db->select('id_inscricao');
+		$this->db->from('inscricoes');
+		$this->db->where('id_excursao', $id);
+		return $this->db->count_all_results();
 	}
 
 	private function isNull($campo)	//Verifica se a variável é nula

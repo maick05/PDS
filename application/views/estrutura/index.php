@@ -1,5 +1,5 @@
-<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.css">      <!-- Estilo Semantic -->
-  <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/style.css'); ?>">  <!-- Estilo CSS -->
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('semantic/dist/semantic.css');?>">      <!-- Estilo Semantic -->
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css'); ?>">  <!-- Estilo CSS -->
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />  <!-- Tag para compatibilidade com navegadores -->             
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">   <!-- Tag para deixar site responsivo -->
@@ -39,8 +39,12 @@
     <i style="" class="bus icon" id="icon_index"></i>
     Buscar Excursões  
   </a>
+   <a class="item" href="<?php echo site_url('minhas_excursoes');?>">
+    <i style="" class="user icon" id="icon_index"></i>
+    Minhas Excursões
+  </a>
   <a class="item" href="<?php echo site_url('add_excursao');?>">
-    <i style="" class="home icon" id="icon_index"></i>
+    <i style="" class="add icon" id="icon_index"></i>
     Criar Excursão
   </a>
   <a class="item">

@@ -13,13 +13,24 @@ class BuscarExcursoesController extends CI_Controller
 	public function ver_detalhes_excursao($id)
 	{
 		$status = $this->InscricoesModel->verificarInscricao($this->session->userdata('usuario_logado')['id_usuario'], $id);
+		$excursao = $this->ExcursoesModel->verDetalhesExcursao($id);
 		if (!$status) 
 		{
-			$status['status'] = "não inscrito";
-			$status['id_inscricao'] = null;
+			if($excursao['id_criador'] == $this->session->userdata('usuario_logado')['id_usuario'])
+			{
+				$status['status'] = "criador";
+				$status['id_inscricao'] = null;
+				$status['pagseguro'] = null;
+			}
+			else
+			{
+				$status['status'] = "não inscrito";
+				$status['id_inscricao'] = null;
+				$status['pagseguro'] = null;
+			}
 		}
 
-		$dados = array('excursao' => $this->ExcursoesModel->verDetalhesExcursao($id), 'id_usuario' => $this->session->userdata('usuario_logado')['id_usuario'], 'status' => $status['status'], 'inscricao' => $status['id_inscricao']);
+		$dados = array('excursao' => $excursao, 'id_usuario' => $this->session->userdata('usuario_logado')['id_usuario'], 'status' => $status['status'], 'inscricao' => $status['id_inscricao'], 'insc_pagseguro' => $status['pagseguro']);
 		$this->load->template('excursoes/detalhes_excursao', '', $dados);
 	}
 }

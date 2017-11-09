@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-	form_add = document.getElementById('form_criar');	// Form do cadastro	// Botão de Cadastrar
+	form_edit = document.getElementById('form_alterar');	// Form do cadastro	// Botão de Cadastrar
 
 	input_nome = document.getElementById('input_nome');	// Campo nome
 	input_email = document.getElementById('input_email');	
@@ -39,7 +39,7 @@ $(document).ready(function()
 	txt_data_menor = "Data inferior a data atual";
 
 
-	$( "#btn_criar" ).on('click', function(e)
+	$( "#btn_alterar" ).on('click', function(e)
 	{
 		if (!IsEmpty(input_nome, msg_nome, span_nome, false, true))
 		{
@@ -57,7 +57,7 @@ $(document).ready(function()
 								{
 									if (IsEmail(input_email))
 									{
-										form_add.submit();
+										form_edit.submit();
 									}
 								}
 							}

@@ -55,8 +55,8 @@
 	</div>
 	
 	<div class="ui tiny modal" id="modal_rec">
-  		<div class="header">Recuperar Senha</div>
-  		<div class="content">
+		<div class="header">Recuperar Senha</div>
+			<div class="content">
 			<p>Informe o seu email que iremos lhe enviar uma solicitação de recuperação de senha:</p>
 			<div class="field">
 				<div class="ui left icon input" style="width:100%">
@@ -64,13 +64,13 @@
 					<input id="input_email_rec" type="text" name="usuarios[email]" placeholder="Email">
 				</div>
 				<div style="" id="msg_rec" class="ui pointing red basic label">
-        			<span id="texto_rec"></span>
-    			</div>
+					<span id="texto_rec"></span>
+				</div>
 			</div>
-  		</div>
+		</div>
 		<div class="actions" id="actions_rec" style="">
 			<div class="ui cancel button">Cancelar</div>
-	    	<div id="btn_recuperar" class="ui denny green button" style="">Enviar</div>
+			<div id="btn_recuperar" class="ui denny green button" style="">Enviar</div>
 		</div>
 	</div>
 </body>
