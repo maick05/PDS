@@ -21,9 +21,23 @@
     MyTour
   </a>
   <div class="right menu">
+    <div class="" style="margin: auto; margin-right: ">
+      <a href="<?php echo site_url('meu_perfil');?>"><img style="width: 35px;" class="ui avatar image" 
+      src="<?php 
+          if(isset($usuario_logado['url_foto']) && file_exists($usuario_logado['url_foto']))
+          {
+              echo base_url($usuario_logado['url_foto']);
+          }
+          else
+          {
+            echo base_url('assets/img/usuarios/user.jpg');
+          }
+          ?>
+        "></a>
+    </div>
     <a style="" class="ui item active" id="item_fixed" href="<?php echo site_url('meu_perfil');?>">
       Meu Perfil
-    </a>
+    </a>    
     <a style="" class="ui item" id="item_fixed" href="<?php echo site_url('logout');?>">
       Sair
     </a>

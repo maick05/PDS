@@ -23,12 +23,21 @@
         <div class="four wide column">
           <div class="ui card" style="">
             <div class="image" id="img_exc">
-              <img src="assets/img/excursoes/excursao_padrao.png" id="">
+              <img 
+              src="<?php 
+                if(isset($linha->url_foto) && file_exists($linha->url_foto))
+                {
+                  echo base_url($linha->url_foto);
+                }
+                else
+                {
+                  echo base_url('assets/img/excursoes/excursao_padrao.png');
+                }?>">
               <input type="hidden" id="id_exc" value="<?php echo $linha->id_excursao ?>">
             </div>
             <div class="content">
               <a href="<?php $segments = array('ver_detalhes_excursao', $linha->id_excursao);echo site_url($segments); 
-             ?>" class="header"><?= $linha->nome;?></a>
+             ?>" class="header"><?= $linha->nome?></a>
               <div class="meta">
                 <span class="date"><?= $data." - ".$linha->horario_part;?></span>
               </div>

@@ -38,6 +38,13 @@ $route['confirmar_inscricao'] = 'VerInscritosController/confirmar_inscricao';
 $route['ver_inscritos'] = 'DetalhesExcursaoController/ver_inscritos';
 $route['cancelar_inscricao_conf'] = 'VerInscritosController/cancelar_inscricao';
 $route['minhas_excursoes'] = 'IndexController/go_minhas_excursoes';
+$route['alterar_foto'] = 'DetalhesExcursaoController/alterar_foto';
+$route['alterar_pontos_parada'] = 'DetalhesExcursaoController/alterar_pontos_parada';
+$route['adicionar_ponto'] = 'AlterarPontosParadaController/adicionar_ponto';
+$route['retornar_pontos'] = 'AlterarPontosParadaController/retornar_pontos';
+$route['remover_ponto'] = 'AlterarPontosParadaController/remover_ponto';
+$route['avaliar'] = 'DetalhesExcursaoController/avaliar';
+$route['retornar_media'] = 'DetalhesExcursaoController/retornar_media';
 $route['logout'] = 'IndexController/logout';
 
 $route['404_override'] = '';

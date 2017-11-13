@@ -13,6 +13,7 @@ body > .grid
   max-width: 450px;
 }
 
+
 .t1
 {
   color: black;
@@ -64,6 +65,11 @@ body > .grid
 div#div_img_home
 {
   width: 245px;
+}
+
+div#div_img_det
+{
+  width: 400px;
 }
 
 #label_img_home

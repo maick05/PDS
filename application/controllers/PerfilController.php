@@ -24,6 +24,11 @@ class PerfilController extends CI_Controller
 				$usuario = $this->input->post("usuarios");
 				$usuario['url_foto'] = $retorno;
 				$usuario['email'] = $this->session->userdata('usuario_logado')['email'];
+				$foto_antiga = $this->session->userdata('usuario_logado')['url_foto'];
+				if (isset($foto_antiga) && file_exists($foto_antiga)) 
+				{
+					unlink($foto_antiga);
+				}
 				$this->UsuariosModel->atualizarPerfil($usuario);
 				$this->session->set_userdata("usuario_logado" , $usuario);
 				$this->meu_perfil();
@@ -69,15 +74,28 @@ class PerfilController extends CI_Controller
    		   'upload_path' => 'assets/img/usuarios/',
    		   'allowed_types' => 'jpg|png',
    		   'file_name' => $name.'.jpg',
-   		   'max_size' => '30000'
+   		   'max_size' => '3000000'
    		);
 
    		$this->upload->initialize($configuracao);
 
    		if ($this->upload->do_upload('url_foto'))
 		{
-			//echo "feitooooooooooo";
-			return "assets/img/usuarios/".$name.'.jpg';
+			$caminho = "assets/img/usuarios/".$name.'.jpg';
+			include('application/helpers/m2brimagem.class.php');
+			$oImg = new m2brimagem($caminho);
+			$valida = $oImg->valida();
+			if ($valida == 'OK')
+			{
+				$oImg->redimensiona(245,263,'fill');
+			    $oImg->grava($caminho);
+			    return $caminho;
+			}
+			else
+			{
+				echo $valida;
+				return "erro";
+			}
 		}
 		else
 		{
@@ -87,6 +105,7 @@ class PerfilController extends CI_Controller
 			}
 			else
 			{
+				echo $this->upload->display_errors();
 				return "erro";
 			}
 		}

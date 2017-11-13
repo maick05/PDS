@@ -18,7 +18,11 @@ class AlterarExcursaoController extends CI_Controller
 		$status['id_inscricao'] = null;
 		$status['pagseguro'] = null;
 
-		$dados = array('excursao' => $excursao, 'id_usuario' => $this->session->userdata('usuario_logado')['id_usuario'], 'status' => $status['status'], 'inscricao' => $status['id_inscricao'], 'insc_pagseguro' => $status['pagseguro'], 'msg_exc' => 'Excursão alterada com sucesso!');
+		$rota = $this->PontosParadaModel->retornarPontos($id);
+		$media = $this->AvaliacoesModel->retornarMedia($excursao['id_criador']);
+		$minha_av = $this->AvaliacoesModel->retornarAvaliacao($this->session->userdata('usuario_logado')['id_usuario'], $excursao['id_criador']);
+
+		$dados = array('excursao' => $excursao, 'id_usuario' => $this->session->userdata('usuario_logado')['id_usuario'], 'status' => $status['status'], 'inscricao' => $status['id_inscricao'], 'insc_pagseguro' => $status['pagseguro'], 'msg_exc' => 'Excursão alterada com sucesso!', 'rota' => $rota,'minha_av' => $minha_av, 'media' => $media);
 		$this->load->template('excursoes/detalhes_excursao', '', $dados);
 	}
 }

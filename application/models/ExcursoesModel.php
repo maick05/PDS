@@ -10,7 +10,7 @@ class ExcursoesModel extends CI_Model
 
 	public function buscarExcursoes()	// Retorna a consulta de um usuário com o email e senha enviados
 	{
-		$this->db->select('excursoes.nome, endereco_part, cidades.nome as cidade_nome, estados.sigla, data_part, horario_part, vagas_disp, valor, excursoes.id_excursao');
+		$this->db->select('excursoes.nome, endereco_part, cidades.nome as cidade_nome, estados.sigla, data_part, horario_part, vagas_disp, valor, excursoes.id_excursao, url_foto');
 		$this->db->from('excursoes');
 		$this->db->join('cidades', 'cidades.id_cidade = id_cidade_part');
 		$this->db->join('estados', 'estados.id_estado = id_estado_part');
@@ -64,6 +64,13 @@ class ExcursoesModel extends CI_Model
 		$this->db->update('excursoes');
 	}
 
+	public function alterarFoto($url_foto, $id)
+	{
+		$this->db->set('url_foto', $url_foto);
+		$this->db->where('id_excursao', $id);
+		$this->db->update('excursoes');
+	}
+
 	public function editarExcursao($excursao)
 	{
 		$this->db->set('nome', $excursao['nome']);
@@ -96,7 +103,7 @@ class ExcursoesModel extends CI_Model
 	}
 
 	public function VerExcursoesCriei($limit, $id)
-	{
+	{ 
 		$this->db->select('excursoes.nome, excursoes.id_excursao as id_exc, tipo_transporte, endereco_part, cidades.nome as cidade_nome, estados.sigla, data_part, horario_part, vagas_disp, valor');
 		$this->db->from('excursoes');
 		$this->db->join('cidades', 'cidades.id_cidade = id_cidade_part');
@@ -111,6 +118,14 @@ class ExcursoesModel extends CI_Model
 		$this->db->from('inscricoes');
 		$this->db->where('id_excursao', $id);
 		return $this->db->count_all_results();
+	}
+
+	public function retornarFoto($id)
+	{
+		$this->db->select('url_foto');
+		$this->db->from('excursoes');
+		$this->db->where('id_excursao', $id);
+		return $this->db->get()->row_array()['url_foto'];
 	}
 
 	private function isNull($campo)	//Verifica se a variável é nula

@@ -8,6 +8,7 @@ class MY_Loader extends CI_loader {
 	{
 		if (isset($_SESSION['usuario_logado']))
 		{
+			$estrutura['usuario_logado'] = $_SESSION['usuario_logado'];
 			$this->view("estrutura/index.php", $estrutura);
 			$this->view($nome, $dados);
 		}

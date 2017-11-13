@@ -63,8 +63,20 @@ class HomeController extends CI_Controller
 
    		if ($this->upload->do_upload('url_foto'))
 		{
-			//echo "feitooooooooooo";
-			return "assets/img/usuarios/".$name.'.jpg';
+			$caminho = "assets/img/usuarios/".$name.'.jpg';
+			include('application/helpers/m2brimagem.class.php');
+			$oImg = new m2brimagem($caminho);
+			$valida = $oImg->valida();
+			if ($valida == 'OK')
+			{
+				$oImg->redimensiona(245,263,'fill');
+			    $oImg->grava($caminho);
+			    return $caminho;
+			}
+			else
+			{
+				return "erro";
+			}
 		}
 		else
 		{
