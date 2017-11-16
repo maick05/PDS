@@ -36,6 +36,8 @@ $(document).ready(function()
 
 	$( "#btn_cadastrar" ).on('click', function(e)	// Função clique do botao de cadastrar
 	{
+		$(document).find('#btn_cadastrar').attr('class', 'ui fluid large teal submit loading button');
+		botao.disabled = true;
 		IsSubmit = false;
 		nome = false;
 
@@ -49,6 +51,8 @@ $(document).ready(function()
    		else
    		{
    			IsSubmit= false; 
+   			$(document).find('#btn_cadastrar').attr('class', 'ui fluid large teal submit button');
+			botao.disabled = false;
    		}
 
    		if (!IsEmpty(input_senha, msg_senha, span_senha, true, true)) 
@@ -57,6 +61,16 @@ $(document).ready(function()
    			{
    				validaEmail(IsSubmit);
    			}
+   			else
+   			{
+   				$(document).find('#btn_cadastrar').attr('class', 'ui fluid large teal submit button');
+				botao.disabled = false;
+   			}
+   		}
+   		else
+   		{
+   			$(document).find('#btn_cadastrar').attr('class', 'ui fluid large teal submit button');
+			botao.disabled = false;
    		}
   	});	
 

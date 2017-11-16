@@ -252,6 +252,21 @@
               {
                 if ($excursao['pagseguro'])
                 {
+                  if (isset($pag) && $pag != "Pagamento aprovado") 
+                  {
+              ?>
+                  Você já iniciou um pagamento para essa excursão, situação atual: <b style="margin-left: 0.5em; text-decoration: underline;"><?php echo $pag ?></b><br><br>
+            <?php 
+                  }
+
+                if(isset($pag) && $pag == "Pagamento aprovado")
+                {
+                ?>
+                <div class="ui label" style="float: left; font-size: 1.2rem"><i class="check icon"></i> Pagamento aprovado </div>
+                <?php
+                }
+                else
+                {
                   ?>
                   <input type="hidden" name="inscricao" value="<?php echo $inscricao; ?>">
                   <input type="hidden" id="id_pagamento" value="<?php echo $inscricao; ?>">
@@ -260,12 +275,14 @@
                   {
                    success : function(transactionCode) 
                    {
-
-                   },
-                   abort : function() 
-                   {
-
-                    $.post('/pds/deletar_pagamento', {id_inscricao:<?php echo $inscricao; ?>, id_excursao:<?php echo $excursao['id_excursao'];?>});
+                    $.post('../verificar_situacao_pagamento', {id_insc:<?php echo $inscricao;?>}, function(data)
+                    {
+                      
+                    });  
+                  },
+                  abort : function() 
+                  {
+                    $.post('../deletar_pagamento', {id_inscricao:<?php echo $inscricao; ?>, id_excursao:<?php echo $excursao['id_excursao'];?>});
                   }
                 }); 
                   return false;
@@ -274,11 +291,15 @@
                   <input type="hidden" id="code" name="code" value="" />
                   <input type="hidden" id="psValor"  value="<?php echo $excursao['valor']; ?>" />
                   <input type="hidden" id="psNome" value="<?php echo $excursao['nome']; ?>" />
+                  <input type="hidden" name="notificationUrl" value="http://www.mytour-pds.com/verificar_pagamento" />
                   <input type="hidden" id="psId_insc"  value="<?php echo $inscricao; ?>" />
                   <input type="hidden" name="iot" value="button" />
                   <input type="image" id="btn_confirmar" src="https://stc.pagseguro.uol.com.br/public/img/botoes/pagamentos/209x48-pagar-assina.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
                 </form>
-                <?php }?>
+                <?php 
+                  }
+                }
+                ?>
 
                 <form action="<?php echo site_url('cancelar_inscricao'); ?>" id="form_cancelar" method="POST" >
                   <input type="hidden" name="inscricoes[id_inscricao]" value="<?php echo $inscricao; ?>">
@@ -396,6 +417,8 @@
             <div id="btn_pross" class="ui denny green button" style="">Prosseguir</div>
           </div>
         </div>
+
+
       </div>
 
 

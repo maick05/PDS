@@ -44,6 +44,20 @@ class UsuariosModel extends CI_Model
 		return $this->db->get('usuarios')->row_array();
 	}
 
+	public function retornaDadosChave($email)	// Retorna a consulta de um usuário com o email e senha enviados
+	{
+		$this->db->select('id_usuario, senha, nome');
+		$this->db->where('email', $email);
+		return $this->db->get('usuarios')->row_array();
+	}
+
+	public function redefinirSenha($senha, $id)	// Retorna a consulta de um usuário com o email e senha enviados
+	{
+		$this->db->set('senha', md5($senha));
+		$this->db->where('id_usuario', $id);
+		$this->db->update('usuarios');
+	}
+
 	public function verificaEmail($email)	//Verifica se o email já existe no cadastro
 	{
 		$this->db->select('email');

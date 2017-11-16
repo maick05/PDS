@@ -8,24 +8,32 @@ class ExcursoesModel extends CI_Model
 		$this->db->insert("excursoes", $excursao);
 	}
 
-	public function buscarExcursoes()	// Retorna a consulta de um usuário com o email e senha enviados
+	public function buscarExcursoes($qtd=0,$inicio=0)	// Retorna a consulta de um usuário com o email e senha enviados
 	{
 		$this->db->select('excursoes.nome, endereco_part, cidades.nome as cidade_nome, estados.sigla, data_part, horario_part, vagas_disp, valor, excursoes.id_excursao, url_foto');
 		$this->db->from('excursoes');
 		$this->db->join('cidades', 'cidades.id_cidade = id_cidade_part');
 		$this->db->join('estados', 'estados.id_estado = id_estado_part');
 		$this->db->order_by("data_part");
+		if ($qtd > 0) 
+		{
+			$this->db->limit($qtd, $inicio);
+		}
 		return $this->db->get();
 	}
 
-	public function pesquisarExcursoes($nome)	// Retorna a consulta de um usuário com o email e senha enviados
+	public function pesquisarExcursoes($nome, $qtd=0, $inicio=0)	// Retorna a consulta de um usuário com o email e senha enviados
 	{
-		$this->db->select('excursoes.nome, endereco_part, cidades.nome as cidade_nome, estados.sigla, data_part, horario_part, vagas_disp, valor, excursoes.id_excursao');
+		$this->db->select('excursoes.nome, endereco_part, cidades.nome as cidade_nome, estados.sigla, data_part, horario_part, vagas_disp, valor, excursoes.id_excursao, url_foto');
 		$this->db->from('excursoes');
 		$this->db->join('cidades', 'cidades.id_cidade = id_cidade_part');
 		$this->db->join('estados', 'estados.id_estado = id_estado_part');
 		$this->db->like('excursoes.nome', $nome);
 		$this->db->order_by("data_part");
+		if ($qtd > 0) 
+		{
+			$this->db->limit($qtd, $inicio);
+		}
 		return $this->db->get();
 	}
 

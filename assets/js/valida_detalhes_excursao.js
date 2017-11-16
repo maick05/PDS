@@ -97,7 +97,7 @@ $(document).ready(function()
 
 	$( "#btn_confirmar" ).on('click', function(e)	
 	{
-		$.post("/pagseguro",{id_inscricao:id_insc.value, nome:nome.value, valor:valor.value, id_criador:id_criador.value},function(data)	// Verifica no banco se o email existe
+		$.post("../pagseguro",{id_inscricao:id_insc.value, nome:nome.value, valor:valor.value, id_criador:id_criador.value},function(data)	// Verifica no banco se o email existe
 		{
 			$('#code').val(data);
 			$('#comprar').submit();

@@ -1,9 +1,35 @@
-  <!-- <script type="text/javascript" src="<?php echo base_url('assets/js/valida_detalhes_excursao.js'); ?>"></script> -->   <!-- Valida Formulários -->
+  <!-- <script type="text/javascript" src="<?php echo base_url('assets/js/valida_ver_inscritos.js'); ?>"></script> -->   <!-- Valida Formulários -->
   <script type="text/javascript" src="<?php echo base_url('assets/css/style.css'); ?>"></script> 
   <script type="text/javascript" src="<?php echo base_url('assets/js/pagseguro.lightbox.js');?>"></script>
   <script src="<?php echo base_url('assets/js/jquery-3.1.1.min.js');?>"></script> 
   <script src="<?php echo base_url('semantic/dist/semantic.min.js');?>"></script> <!-- JavaScript Semantic -->
+  <script type="text/javascript">
 
+    function ver_pagamentos(id)
+    {
+      var table = document.getElementById('tab_pag');
+      var row;
+
+      if (table.rows.length > 1) 
+      {
+        for (var i = 1; i <= table.rows.length; i++) 
+        {
+            table.deleteRow(0);
+        }
+      }
+
+      $.post('ver_pagamentos', {id_insc:id}, function(data)
+      { 
+        result = $.parseJSON(data);
+        result.forEach(function(e, i)
+        {
+          row = table.insertRow(i + 1);
+          row.innerHTML = "<td>"+e.data_abertura+"</td> <td>"+e.situacao+"</td><td>"+e.data_hora_modif+"</td>";
+        })
+        $('#modal_pag').modal('show');
+      }); 
+    }
+  </script>
   <h2 id="" class="ui dividing header">Ver inscritos da excursão</h2>
   <?php
   if(isset($msg))
@@ -11,7 +37,7 @@
     ?>
     <div style="display: block;" class="ui <?php echo "green"; ?> success message">
       <div class="header">
-        Parabéns
+        Atenção
       </div>
       <p style=""><?php echo $msg; ?></p>
     </div>
@@ -69,9 +95,13 @@
             <?php
             if ($linha->insc_pag) 
             {
-            ?>
-            <i class="check icon"></i>
-            <?php
+              ?>
+              <!-- <i class="check icon"></i> -->
+              <div class="ui animated fade button" tabindex="0" onclick="ver_pagamentos(<?php echo $linha->id_inscricao;?>)">
+                <div class="visible content"><i class="money icon"></i>Pagamentos </div>
+                <div class="hidden content"><i class="unhide icon"></i> Visualizar</div>
+              </div>
+              <?php
             }
             ?>
           </td>
@@ -93,26 +123,43 @@
               }
               else
               {
-              ?>
+                ?>
                 <form action="<?php echo site_url('cancelar_inscricao_conf');?>" id="form_canc" method="POST">
                   <input type="hidden" name="id_inscricao" value="<?php echo $linha->id_inscricao;?>">
                   <input type="hidden" name="id_excursao" value="<?php echo $linha->id_exc;?>">
                   <button class="ui icon red button">
-                  <i class="cancel icon"></i>
+                    <i class="cancel icon"></i>
                   </button> 
                 </form>
-              <?php
+                <?php
               }
             }
+            ?>
+          </td>
+        </tr>
+        <?php
+      }
       ?>
-    </td>
-  </tr>
-  <?php
-}
-?>
-</tbody>
-</table>
+    </tbody>
+  </table>
 
-</div>
+  <div class="ui modal" id="modal_pag">
+    <div class="header">Transações iniciadas</div>
+    <div class="content">
+  <table class="ui celled table" id="tab_pag">
+    <thead>
+      <tr>
+        <th>Data de abertura</th>
+        <th>Situação</th>
+        <th>Data da última atualização</th>
+      </tr>
+    </thead>
+      </table>
+      </div>
+      <div class="actions" id="actions_rec" style="">
+        <div id="btn_pross" class="ui positive button" style="">Ok</div>
+      </div>
+    </div>
+  </div>
 
 

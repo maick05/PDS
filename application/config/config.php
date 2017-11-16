@@ -380,7 +380,7 @@ $config['encryption_key'] = '';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
+$config['sess_save_path'] = FCPATH.'ci_sessions';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
@@ -521,5 +521,16 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
-$config['allowed_types'] = 'jpg|gif|png';
+$config['allowed_types'] = 'jpg|gif|png|jpeg';
 $config['max_size'] = 100000;
+
+
+
+$config['smtp_host'] = 'email-ssl.com.br';
+$config['smtp_user'] = 'suporte@mytour-pds.com';
+$config['smtp_pass'] = 'my-1995-zero';
+$config['smtp_port'] = '465';
+$config['protocol'] = 'SMTP';
+$config['newline']  = "\r\n";
+$config['crlf']     = "\r\n";
+$config['charset']  = 'UTF-8';

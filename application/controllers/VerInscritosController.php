@@ -25,6 +25,28 @@ class VerInscritosController extends CI_Controller
 		$this->load->template('excursoes/ver_inscritos', '', $dados);
 	}
 
+	public function ver_pagamentos()
+	{
+		$id = 64;//$this->input->post("id_insc");
+		$pagamentos = $this->PagamentosModel->retornarPagamentos($id)->result();
+
+		foreach ($pagamentos as $linha) 
+		{
+			$data = new DateTime($linha->data_abertura);
+			$linha->data_abertura = $data -> format("d/m/Y - H:m:s");
+			if ($linha->data_hora_modif == null) 
+			{
+				$linha->data_hora_modif = '';
+			}
+			else
+			{
+				$data = new DateTime($linha->data_hora_modif);
+				$linha->data_hora_modif = $data -> format("d/m/Y - H:m:s");
+			}
+		}
+		echo json_encode($pagamentos);
+	}
+
 	// public function ver_detalhes_excursao($id, $msg)
 	// {
 	// 	$status = $this->InscricoesModel->verificarInscricao($this->session->userdata('usuario_logado')['id_usuario'], $id);

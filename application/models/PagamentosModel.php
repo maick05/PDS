@@ -44,5 +44,24 @@ class PagamentosModel extends CI_Model
 		$this->db->where('id_pagamento', $id);
 		return $this->db->get()->row_array()['id_inscricao'];
 	}
+
+	public function verificar_pagamento($id)
+	{
+		$this->db->select('situacao');
+		$this->db->from('pagamentos_pagseguro');
+		$this->db->where('id_inscricao', $id);
+		$this->db->order_by('id_pagamento', 'DESC');
+		$this->db->limit(1);
+		return $this->db->get()->row_array()['situacao'];
+	}
+
+	public function retornarPagamentos($id)
+	{
+		$this->db->select('situacao, data_abertura, data_hora_modif');
+		$this->db->from('pagamentos_pagseguro');
+		$this->db->where('id_inscricao', $id);
+		$this->db->order_by('id_pagamento', 'DESC');
+		return $this->db->get();
+	}
 }
 ?>

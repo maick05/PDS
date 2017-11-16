@@ -12,7 +12,9 @@ class PagSeguroController extends CI_Controller
 		$data['itemId1'] = '1';
 		$data['itemQuantity1'] = '1';
 		$data['itemDescription1'] = $this->input->post("nome");
-		$data['itemAmount1'] = $this->input->post("valor");
+		$data['itemAmount1'] = '1.50';//$this->input->post("valor");
+		$data['redirectURL'] = 'http://www.mytour-pds.com/verificar_pagamento';
+		$data['notificationUrl'] = 'http://www.mytour-pds.com/verificar_pagamento';
 
 		
 		$data['reference'] = $this->insere_pagamento($this->input->post("id_inscricao"));
@@ -48,13 +50,12 @@ class PagSeguroController extends CI_Controller
 
 		$notificationCode = preg_replace('/[^[:alnum:]-]/','',$_POST["notificationCode"]);
 
-		$data['token'] ='B85F168A57CA4B92B9923CC6C295F3B5';
-		$data['email'] = 'my.tour.pds@gmail.com';
+		$appKey ='04D4BCD00808C6F3343ACFA43A70F2FB';
+		$appId= 'mytour';
 
-		$data = http_build_query($data);
-
-		$url = 'https://ws.pagseguro.uol.com.br/v3/transactions/notifications/'.$notificationCode.'?'.$data;
-
+		$url = 'https://ws.pagseguro.uol.com.br/v3/transactions/notifications/'.$notificationCode.'?appId='.$appId.'&appKey='.$appKey;
+		$code = array('registro' => $url, 'data' => date("Y/m/d h:i:s"));
+		$this->AutorizacoesModel->registrar($code);
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_URL, $url);
@@ -62,7 +63,6 @@ class PagSeguroController extends CI_Controller
 		curl_close($curl);
 
 		$xml = simplexml_load_string($xml);
-
 		$this->atualizarSituacao($xml->reference, $xml->status);
 	}
 
@@ -71,57 +71,57 @@ class PagSeguroController extends CI_Controller
 		$id = $this->PagamentosModel->retornarInscricao($reference);
 		switch ($status) 
 		{
-		    case 1:
-		    {
-		    	$status = "Aguardando pagamento";
-		    	break;
-		    }
-		    case 2:
-		    {
-		    	$status = "Em analise";
-		    	break;
-		    }
-		    case 3:
-		    {
-		    	$status = "Pagamento aprovado";
-		    	$this->InscricoesModel->atualizarStatus("Confirmada", $id);
-		    	break;
-		    }
-		    case 4:
-		    {
-		    	$status = "Pagamento aprovado";
-		    	$this->InscricoesModel->atualizarStatus("Confirmada", $id);
-		    	break;
-		    }
-		    case 5:
-		    {
-		    	$status = "Em disputa";
-		    	break;
-		    }
-		    case 6:
-		    {
-		    	$status = "Devolvido";
-		    	break;
-		    }
-		    case 7:
-		    {
-		    	$status = "Cancelado";
-		    	break;
-		    }
-		    case 8:
-		    {	
-		    	$status = "Debitado";
-		    	break;
-		    }
-		    case 9:
-		    {	
-		    	$status = "Retenção Temporária";
-		    	break;
-		    }
-		    default:
-		    {
-		    	$status = "Desconhecido";
-		    }
+			case 1:
+			{
+				$status = "Aguardando pagamento";
+				break;
+			}
+			case 2:
+			{
+				$status = "Em analise";
+				break;
+			}
+			case 3:
+			{
+				$status = "Pagamento aprovado";
+				$this->InscricoesModel->atualizarStatus("Confirmada", $id);
+				break;
+			}
+			case 4:
+			{
+				$status = "Pagamento aprovado";
+				$this->InscricoesModel->atualizarStatus("Confirmada", $id);
+				break;
+			}
+			case 5:
+			{
+				$status = "Em disputa";
+				break;
+			}
+			case 6:
+			{
+				$status = "Devolvido";
+				break;
+			}
+			case 7:
+			{
+				$status = "Cancelado";
+				break;
+			}
+			case 8:
+			{	
+				$status = "Debitado";
+				break;
+			}
+			case 9:
+			{	
+				$status = "Retenção Temporária";
+				break;
+			}
+			default:
+			{
+				$status = "Desconhecido";
+			}
 		}
 
 		$this->PagamentosModel->atualizarSituacao($reference, $status);
@@ -143,21 +143,37 @@ class PagSeguroController extends CI_Controller
 		$appKey ='04D4BCD00808C6F3343ACFA43A70F2FB';
 		$appId = 'mytour';
 
-		$data['permissions'] = 'CREATE_CHECKOUTS';
-		$data['redirectURL'] = 'https://mytourml.000webhostapp.com/notificar_autorizacao';
-		$data['reference'] = 'run';
+		$url = "https://ws.sandbox.pagseguro.uol.com.br/v2/authorizations/request?appId=".$appId."&appKey=".$appKey;
+                      
+	   //Cria o XML que será enviado ao PagSeguro.
+	   $dom = new DOMDocument('1.0', 'utf-8');                      	     
+	   $dom->preserveWhiteSpace = false;
+	   $dom->formatOutput = true;
+	   $permissions   = array('SEARCH_TRANSACTIONS', 'RECEIVE_TRANSACTION_NOTIFICATIONS' ,'CREATE_CHECKOUTS');
+	   $authorization = $dom->createElement("authorizationRequest");
+	   $permission = $dom->createElement("permissions");
+	   foreach ($permissions as $key => $typeAuthorization) {
+	       $typeAuthorization = $dom->createElement("code", $typeAuthorization);
+	       $permission->appendChild($typeAuthorization);
+	   }
+	   $redirectURL = $dom->createElement("redirectURL", 'http://www.mytour-pds.com/notificar_autorizacao');
+	   $reference = $dom->createElement("reference",  $this->session->userdata('usuario_logado')['id_usuario']);
+	   $authorization->appendChild($redirectURL);
+	   $authorization->appendChild($permission);
+	   $dom->appendChild($authorization);
+	   $dom->save("teste.xml");
 		
-   		$url = "https://ws.pagseguro.uol.com.br/v2/authorizations/request?appId=".$appId."&appKey=".$appKey;
+		$url = "https://ws.pagseguro.uol.com.br/v2/authorizations/request?appId=".$appId."&appKey=".$appKey;
 
-		$data = http_build_query($data);
+		// $data = http_build_query($data);
 
 		$curl = curl_init($url);
 
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_POST, true);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-		curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+	   	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	   	curl_setopt($curl, CURLOPT_HTTPHEADER, Array("Content-Type: application/xml; charset=ISO-8859-1"));
+	   	curl_setopt($curl, CURLOPT_POSTFIELDS, $dom->saveXML());
+		
 		$xml = curl_exec($curl);
 
 		curl_close($curl);
@@ -183,10 +199,16 @@ class PagSeguroController extends CI_Controller
 
 		$xml = simplexml_load_string($xml);
 
-		$aut = array('email' => $xml->authorizerEmail, 'code'=>$xml->code, 'data_aut' => $xml->creationDate, 'status' => $xml->permissions->permission->status, 'id_autorizador' => $this->session->userdata('usuario_logado')['id_usuario']);
+		$aut = array('email' => $xml->authorizerEmail, 'code'=>$xml->code, 'data_aut' => $xml->creationDate, 'status' => $xml->permissions->permission->status, 'id_autorizador' => $xml->reference);
 		$id = $this->ExcursoesModel->retornarUltimaExcursaoDoCriador($this->session->userdata('usuario_logado')['id_usuario']);
 		$this->atualizar_autorizacao($aut, $id);
-		$this->ver_detalhes_excursao($id);
+		// $this->ver_detalhes_excursao($id);
+	}
+
+	public function verificar_situacao_pagamento()
+	{
+		$id = $this->input->post("id_insc");
+		echo $this->PagamentosModel->verificar_pagamento($id);
 	}
 
 	public function atualizar_autorizacao($aut, $id)

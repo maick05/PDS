@@ -2,7 +2,7 @@ body
 {
   background: url('../img/outros/background.jpg');
 }
-    
+
 body > .grid 
 {
   height: 100%;
@@ -82,14 +82,106 @@ input#btn_img_home
   display: none;
 }
 
+#divs
+{
+  margin-left: 15em;
+  background: white;
+  min-height: 100%;
+}
 
+
+@media only screen and (min-width: 1125px)
+{
+  #desc_perfil
+  {
+    margin-left: 20em; 
+    width: ; 
+  }
+
+  #img_perfil
+  {
+    float: left;
+  }
+}
+
+#divs
+{
+  padding: 1.5em;
+}
+#div_cont
+{
+  margin-top: 3em;
+}
+
+#btn_alterar_perfil
+{
+  font-size: 0.7rem;
+} 
+
+#btn_rec_senha_perfil
+{
+  font-size:0.7rem;
+}
+
+@media only screen and (max-width: 411px) 
+{
+  #img_menu
+  {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 511px) 
+{
+  #div_cont
+  {
+    margin-top: 2em;
+  }
+
+  #divs
+  {
+    padding: 4em;
+  }
+  
+  #btn_alterar_perfil
+  {
+    font-size: 1rem;
+  } 
+
+  #btn_rec_senha_perfil
+  {
+    font-size: 1rem;
+  }  
+}
+
+@media only screen and (min-width: 388px) 
+{
+  #btn_alterar_perfil
+  {
+    font-size: 0.86rem;
+  } 
+
+  #btn_rec_senha_perfil
+  {
+    font-size: 0.86rem;
+  }  
+}
 
 @media only screen and (min-width: 768px) 
 {
+  #div_cont
+  {
+    margin-top: 0;
+  }
   #header_perfil
   {
     width: 102.3%;
   }
+
+  #divs
+  {
+    padding: 5em;
+  } 
 
   .campo_home
   {
@@ -144,7 +236,7 @@ input#btn_img_home
   .menu-abrir,
   .menu-fechar 
   {
-      display: none;
+    display: none;
   }
 }
 
@@ -158,7 +250,7 @@ div#btn_concluir
 
 input#input_data 
 {
-   margin-top: 0.2em;
+ margin-top: 0.2em;
 }
 
 div#desc_home
@@ -201,12 +293,28 @@ div#desc_home
 }
 
 #menu_fixo
+{
+  background:#0064b5;
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+}
+
+@media only screen and (max-width: 1124px) 
+{
+  #desc_perfil
   {
-    background:#0064b5;
-    position: fixed;
-    z-index: 2;
-    width: 100%;
+    margin-top: 1em;
   }
+
+  #img_perfil
+  {
+    float: none;
+  }
+}
+
+
+
 
 @media only screen and (max-width: 767px) 
 {
@@ -234,20 +342,21 @@ div#desc_home
 
   #divs:after
   {
-
+    margin-left: 10em;
   }
 
   #divs
   {
-    left: -90%;
+    margin-left: 0em;
+    height: ;
   }
-   
+
   div#menu_ativo 
   {
-      height: 93.5%;
-      left: 0;
-      margin-top: 3.55em;
-      float: left;
+    height: 93.5%;
+    left: 0;
+    margin-top: 3.55em;
+    float: left;
   }
 
 
@@ -264,51 +373,39 @@ div#desc_home
   p::html
   {
     content: "";
-        display: block;
+    display: block;
 
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 
-        background: rgba(0,0,0,0.4)
+    background: rgba(0,0,0,0.4)
   }
 
   .menu-abrir,
   .menu-fechar 
   {
-      background: none;
-      color:white;
-      border: 0;
-      outline: 0;
-      -webkit-appearance: none;
-      font-size: 1.6em;
-      text-indent: -999em;
-      height: 0;
-      width:.65em;
-      padding-top:.125em;
-      border-top: .375em double #000;
-      border-bottom: .125em solid #000;
-      vertical-align: middle;   
+    background: none;
+    color:white;
+    border: 0;
+    outline: 0;
+    -webkit-appearance: none;
+    font-size: 1.6em;
+    text-indent: -999em;
+    height: 0;
+    width:.65em;
+    padding-top:.125em;
+    border-top: .375em double #000;
+    border-bottom: .125em solid #000;
+    vertical-align: middle;   
   }
-}
-
-
-#desc_perfil
-{
-  margin-left: 20em; 
-  width: 80%;
-}
-
-#img_perfil
-{
-  float: left;
 }
 
 #div_date
 {
-  
+
 }
 
 #destaq

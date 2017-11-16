@@ -25,13 +25,18 @@ class AutorizacoesModel extends CI_Model
 		$this->db->update("autorizacoes");
 	}
 
-	public function resgatarCodigo()
+	public function resgatarCodigo($id)
 	{
 		$this->db->select("code");
 		$this->db->from("autorizacoes");
 		$this->db->where('id_autorizador', $id);
 		$this->db->where('status', 'APPROVED');
 	 	return $this->db->get()->row_array()['code'];
+	}
+
+	public function registrar($code)	// Insere usuario no banco
+	{
+	 	$this->db->insert("registro", $code);
 	}
 }
 ?>

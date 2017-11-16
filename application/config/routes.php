@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed'); 
 $route['default_controller'] = 'loginController';
 
 $route['cadastro'] = 'LoginController/go_cadastro';
@@ -11,13 +11,14 @@ $route['verificar_email'] = 'CadastroController/verificar_email';
 $route['listar_estados'] = 'HomeController/listar_estados';
 $route['cidades_por_estado'] = 'HomeController/listar_cidades';
 $route['concluir_cadastro'] = 'HomeController/concluir_cadastro';
-$route['enviar_email'] = 'LoginController/enviar_email';
 $route['home'] = 'HomeController/home';
 $route['meu_perfil'] = 'IndexController/go_meu_perfil';
 $route['alterar_perfil'] = 'PerfilController/alterar_perfil';
 $route['add_excursao'] = 'IndexController/go_add_excursao';
-$route['buscar_excursoes'] = 'IndexController/go_buscar_excursoes';
-$route['pesquisar_excursoes'] = 'BuscarExcursoesController/pesquisar_excursoes';
+$route['buscar_excursoes/(:any)'] = 'IndexController/go_buscar_excursoes/$1';
+$route['buscar_excursoes'] = 'IndexController/go_buscar_excursoes/0';
+$route['pesquisar_excursoes/(:any)'] = 'BuscarExcursoesController/pesquisar_excursoes/$1/';
+$route['pesquisar_excursoes/(:any)/(:any)'] = 'BuscarExcursoesController/pesquisar_excursoes/$1/$2';
 $route['criar_excursao'] = 'AddExcursaoController/criar_excursao';
 $route['ver_detalhes_excursao/(:any)'] = 'BuscarExcursoesController/ver_detalhes_excursao/$1';
 $route['inscrever_se'] = 'DetalhesExcursaoController/inscrever_se';
@@ -25,6 +26,7 @@ $route['cancelar_inscricao'] = 'DetalhesExcursaoController/cancelar_inscricao';
 $route['confirmar_inscricao'] = 'DetalhesExcursaoController/confirmar_inscricao';
 $route['pagseguro'] = 'PagSeguroController/abrir_pagamento';
 $route['verificar_pagamento'] = 'PagSeguroController/verificar_pagamento';
+$route['verificar_situacao_pagamento'] = 'PagSeguroController/verificar_situacao_pagamento';
 $route['deletar_pagamento'] = 'PagSeguroController/deletar_pagamento';
 $route['permission'] = 'PagSeguroController/permission';
 $route['autorizar'] = 'PagSeguroController/autorizar';
@@ -45,6 +47,10 @@ $route['retornar_pontos'] = 'AlterarPontosParadaController/retornar_pontos';
 $route['remover_ponto'] = 'AlterarPontosParadaController/remover_ponto';
 $route['avaliar'] = 'DetalhesExcursaoController/avaliar';
 $route['retornar_media'] = 'DetalhesExcursaoController/retornar_media';
+$route['recuperar_senha'] = 'LoginController/recuperar_senha';
+$route['get_key'] = 'LoginController/validar_chave';
+$route['redefinir_senha'] = 'LoginController/redefinir_senha';
+$route['ver_pagamentos'] = 'VerInscritosController/ver_pagamentos';
 $route['logout'] = 'IndexController/logout';
 
 $route['404_override'] = '';

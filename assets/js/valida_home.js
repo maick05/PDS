@@ -11,7 +11,9 @@ $(document).ready(function()
 	cidade =  document.getElementById('cidade_select'); // Span da mensagemdo campo data
 	estado =  document.getElementById('estado_select'); // Span da mensagemdo campo data 
 	input_foto =  document.getElementById('btn_img_home');
+	
 	menu =  document.getElementById('menu_lateral');
+	divs =  document.getElementById('divs');
 
 	$( "#btn_concluir" ).on('click', function(e)	// Função clique do botao de concluir
 	{
