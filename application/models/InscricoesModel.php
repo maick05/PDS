@@ -37,13 +37,17 @@ class InscricoesModel extends CI_Model
 		return $this->db->get('inscricoes')->row_array();
 	}
 
-	public function verInscritosExcursao($id)	// Retorna a consulta de um usuário com o email e senha enviados
+	public function verInscritosExcursao($qtd=0, $inicio=0, $id)	// Retorna a consulta de um usuário com o email e senha enviados
 	{
 		$this->db->select('usuarios.nome, usuarios.telefone, usuarios.celular, usuarios.email, usuarios.url_foto, id_inscricao, status, excursoes.nome as nome_excursao, inscricoes.pagseguro as insc_pag, excursoes.id_excursao as id_exc');
 		$this->db->from('inscricoes');
 		$this->db->join('usuarios', 'usuarios.id_usuario = id_inscrito');
 		$this->db->join('excursoes', 'excursoes.id_excursao = inscricoes.id_excursao');
 		$this->db->where('inscricoes.id_excursao', $id);
+		if ($qtd > 0) 
+		{
+			$this->db->limit($qtd, $inicio);
+		}
 		return $this->db->get();
 	}
 

@@ -8,9 +8,32 @@ class HomeController extends CI_Controller
 		echo json_encode($this->EstadosModel->listarEstados());
 	}
 
-	public function home()						// Manda para a página padrão do sistema caso usuário não esteja logado
+	public function go_home()					
 	{
-		$this->load->view('estrutura/index');		
+		$excursoesProx = $this->ExcursoesModel->proximasExcursoes();
+		$minhasExcursoes = $this->ExcursoesModel->VerExcursoesCriei(4, 0, $this->session->userdata('usuario_logado')['id_usuario']);
+		$sem_ep = null;
+		$sem_me = null;
+		if ($excursoesProx->num_rows() == 0) 
+		{
+			$sem_ep = true;
+		}
+		else
+		{
+			$sem_ep == null;
+		}
+
+		if ($minhasExcursoes->num_rows() == 0) 
+		{
+			$sem_me = true;
+		}
+		else
+		{
+			$sem_me == null;
+		}
+
+		$dados = array('excursoesProx' => $excursoesProx, 'sem_ep' => $sem_ep, 'sem_me' => $sem_me, 'minhasExcursoes' => $minhasExcursoes);
+		$this->load->template('estrutura/home', '', $dados);		
 	}
 
 	public function listar_cidades()	// Lista as cidades no select de acordo com o estado selecionado
@@ -42,9 +65,9 @@ class HomeController extends CI_Controller
 		}
 		else
 		{
-			//ERRRRROOOOOOOO
+			echo "Foto inválida";
 		}
-}
+	}
 
 	public function salvar_foto()
 	{
@@ -89,10 +112,5 @@ class HomeController extends CI_Controller
 				return "erro";
 			}
 		}
-	}
-
-	function go_home()
-	{
-		$this->load->template('estrutura/home', '', '');
 	}
 }

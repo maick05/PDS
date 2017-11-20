@@ -31,8 +31,7 @@ class LoginController extends CI_Controller
     {
         $usuario = $this->UsuariosModel->retornaUsuario('email', $this->input->post("usuarios")['email']);
         $this->session->set_userdata("usuario_logado" , $usuario);
-        $dados = array('cadastro' => false);
-        $this->load->template('estrutura/home', '', $dados);    
+        redirect(base_url()."home");
     }
 
     public function recuperar_senha()

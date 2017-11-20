@@ -94,18 +94,16 @@ $(document).ready(function()
     	
 	};
 
-
 	document.documentElement.onclick = function(event) 
 	{
+		btn_abrir = document.getElementById('btn_menu_abrir');
 		if ($("#menu_ativo").length)
 		{
-			document.documentElement.onclick = function(event) 
-			{
-			    if (event.target === document.documentElement) 
-			    {
-			        document.documentElement.classList.add('menu-ativo');
-			    }
-			};
+			menu =  document.getElementById('menu_ativo');
+		    if ((event.target != menu) && (event.target != btn_abrir))
+		    {
+		        $(document).find('#menu_ativo').attr('id', 'menu_lateral');
+		    }
 		}
 	}
 });

@@ -9,11 +9,13 @@ $(document).ready(function()
 	input_horario = document.getElementById('input_horario');
 	input_valor = document.getElementById('input_valor');
 	input_data = document.getElementById('input_data');	
+	input_data_d = document.getElementById('input_data_d');	
 	input_estado = document.getElementById('estado_select');	
 
 
 	msg_nome = document.getElementById('msg_nome');	
 	msg_email = document.getElementById('msg_email'); 
+	msg_data_d = document.getElementById('msg_data_d');
 	msg_data = document.getElementById('msg_data');
 	msg_endereco = document.getElementById('msg_endereco');	
 	msg_vagas = document.getElementById('msg_vagas');	
@@ -23,6 +25,7 @@ $(document).ready(function()
 
 	span_nome = $("#texto_nome");	// texto da mensagem do campo nome
 	span_email = $("#texto_email");	// texto da mensagem do campo email
+	span_data_d = $("#texto_data_d");	// texto da mensagem do campo senha
 	span_data = $("#texto_data");	// texto da mensagem do campo senha
 	span_endereco = $("#texto_endereco");
 	span_vagas = $("#texto_vagas");	
@@ -47,17 +50,20 @@ $(document).ready(function()
 			{
 				if (!IsEmpty(input_estado, msg_estado, span_estado, false, true))
 				{
-					if(!IsEmpty(input_data, msg_data, span_data, false, true) && verificaData(input_data))
+					if(!IsEmpty(input_data, msg_data, span_data, false, true) && verificaData(input_data, msg_data, span_data))
 					{					
 						if (!IsEmpty(input_horario, msg_horario, span_horario, false, true))
 						{
-							if (!IsEmpty(input_vagas, msg_vagas, span_vagas, false, true) && verificaVaga(input_vagas))
+							if(verificaData(input_data_d, msg_data_d, span_data_d) && verificaDatas())
 							{
-								if (!IsEmpty(input_valor, msg_valor, span_valor, false, true) && verificaValor(input_valor))
+								if (!IsEmpty(input_vagas, msg_vagas, span_vagas, false, true) && verificaVaga(input_vagas))
 								{
-									if (IsEmail(input_email))
+									if (!IsEmpty(input_valor, msg_valor, span_valor, false, true) && verificaValor(input_valor))
 									{
-										form_add.submit();
+										if (IsEmail(input_email))
+										{
+											form_add.submit();
+										}
 									}
 								}
 							}
@@ -100,7 +106,7 @@ $(document).ready(function()
 		}
 	}	
 
-	function verificaData(campo)	
+	function verificaData(campo, msg, span)	
 	{
 		if (campo.value) 
 		{
@@ -110,22 +116,49 @@ $(document).ready(function()
 			if (data_atual < data_exc) 
 			{
 				
-				msg_data.style.display = "none";
+				msg.style.display = "none";
 				return true;
 			}
 			else 
 			{
-				msg_data.style.display = "block";
-				span_data.html(txt_data_menor);
+				msg.style.display = "block";
+				span.html(txt_data_menor);
 				return false;
 			}
 		}
 		else
 		{
-			msg_data.style.display = "none";
+			msg.style.display = "none";
 			return true;
 		}
 	}
+
+	function verificaDatas()	
+	{
+		if (input_data_d.value) 
+		{
+			var data = new Date(input_data.value);
+			var data_d = new Date(input_data_d.value);
+			
+			if (data < data_d) 
+			{
+				msg_data_d.style.display = "none";
+				return true;
+			}
+			else 
+			{
+				msg_data_d.style.display = "block";
+				span_data_d.html("A data de chegada não pode ser inferior que a data de partida");
+				return false;
+			}
+		}
+		else
+		{
+			msg_data_d.style.display = "none";
+			return true;
+		}
+	}
+
 
 	function verificaValor(campo)	
 	{

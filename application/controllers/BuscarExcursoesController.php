@@ -3,14 +3,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class BuscarExcursoesController extends CI_Controller 
 {
-	public function pesquisar_excursoes($nome)	  //Cadastra o usuario
+	public function pesquisar_excursoes()	  //Cadastra o usuario
 	{
+		$filtro;
+		if ($this->input->post("filtros") != '') 
+		{
+			$filtro = $this->input->post("filtros");
+			$this->session->set_userdata("filtros" , $filtro);
+		}
+		else
+		{
+			$filtro = $this->session->userdata('filtros');
+		}
+
 		$this->load->library('pagination');
-		$string = 'pesquisar_excursoes/'.$nome;
+		$string = 'pesquisar_excursoes';
 		$config['base_url'] = base_url($string);
-		$config['total_rows'] = $this->ExcursoesModel->pesquisarExcursoes($nome)->num_rows();
+		$config['total_rows'] = $this->ExcursoesModel->pesquisarExcursoes($filtro['nome'], $filtro['data_ini'], $filtro['data_fin'])->num_rows();
 		$config['num_links'] = 10;
-		$config['per_page'] = 8;
+		$config['per_page'] = 9;
 		$config['first_link'] = 'Ínicio';
 		$config['last_link'] = FALSE;
 		$config['full_tag_open'] = '<ul class="ui floated pagination menu">';
@@ -29,10 +40,31 @@ class BuscarExcursoesController extends CI_Controller
 		$config['last_tag_open'] = '<li class="item">';
 		$config['last_tag_close'] = '</li>';
 		$qtd = $config['per_page'];
-		($this->uri->segment(3) != '') ? $inicio = $this->uri->segment(3) : $inicio = 0;
+
+		($this->uri->segment(2) != '') ? $inicio = $this->uri->segment(2) : $inicio = 0;
 		$this->pagination->initialize($config); 
-		$dados = array('excursoes' => $this->ExcursoesModel->pesquisarExcursoes($nome, $qtd, $inicio), 
-		'pagination' => $this->pagination->create_links(), 'pesq' => 'tem');
+
+		if ($config['total_rows'] == 0) 
+		{
+			$msg = true;
+		}
+		else
+		{
+			$msg = null;
+		}
+
+		if ($config['total_rows'] > $config['per_page']) 
+		{
+			$pagination = $this->pagination->create_links();
+		}
+		else
+		{
+			$pagination = null;
+		}
+
+		$dados = array('excursoes' => $this->ExcursoesModel->pesquisarExcursoes($filtro['nome'], $filtro['data_ini'], $filtro['data_fin'], $qtd, $inicio), 
+		'pagination' => $pagination, 'pesq' => 'tem', 'msg' => $msg);
+
 		$this->load->template('excursoes/buscar_excursoes', '', $dados);	
 	}
 

@@ -53,7 +53,7 @@
         <div class="field" style="width: 66.66%">
           <label>Nome da Excursão*</label>
           <div class="ui left icon input">
-            <input autocomplete="off" id="input_nome" type="text" placeholder="Ex: Excursão para o Rio de Janeiro" name="excursoes[nome]"
+            <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" autocomplete="off" id="input_nome" type="text" placeholder="Ex: Excursão para o Rio de Janeiro" name="excursoes[nome]"
             value="">
             <i class="info icon"></i>
           </div>
@@ -65,7 +65,7 @@
       <div class="three fields">
         <div class="field">
           <label>Tipo de transporte*</label>
-          <select name="excursoes[tipo_transporte]" style="" id="" class="ui fluid dropdown">
+          <select style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[tipo_transporte]" style="" id="" class="ui fluid dropdown">
             <option value="Carro">Carro</option>
             <option value="Ônibus">Ônibus</option>
             <option value="Van">Van</option>
@@ -75,7 +75,7 @@
         </div>
         <div class="field">
           <label>Categoria*</label>
-          <select name="excursoes[categoria]" style="" id="" class="ui fluid dropdown">
+          <select style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[categoria]" style="" id="" class="ui fluid dropdown">
             <option value="Música">Música</option>
             <option value="Esportes">Esportes</option>
             <option value="Turismo">Turismo</option>
@@ -89,7 +89,7 @@
         <div class="field" style="width: 66.66%">
           <label>Endereço de partida*</label>
           <div class="ui left icon input">
-            <input autocomplete="off" id="input_endereco" type="text" placeholder="Ex: Avenida José Bonifácio" name="excursoes[endereco_part]"
+            <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" autocomplete="off" id="input_endereco" type="text" placeholder="Ex: Avenida José Bonifácio" name="excursoes[endereco_part]"
             value="">
             <i class="point icon"></i>
           </div>
@@ -101,7 +101,7 @@
       <div class="three fields">
         <div class="field">
           <label>Estado*</label>
-          <select name="excursoes[id_estado_part]" style="" id="estado_select" class="ui fluid dropdown">
+          <select style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[id_estado_part]" style="" id="estado_select" class="ui fluid dropdown">
             <option value="" selected disabled>Estado</option>
           </select>
           <div style="" id="msg_estado" class="ui pointing red basic label">
@@ -111,7 +111,38 @@
 
         <div class="field">
           <label>Cidade*</label>
-          <select name="excursoes[id_cidade_part]" id="cidade_select" class="ui fluid dropdown">
+          <select style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[id_cidade_part]" id="cidade_select" class="ui fluid dropdown">
+            <option value="" selected disabled>Selecione o estado</option>
+          </select>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="field" style="width: 66.66%">
+          <label>Endereço de chegada</label>
+          <div class="ui left icon input">
+            <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" autocomplete="off" id="input_endereco_d" type="text" placeholder="Ex: Avenida José Bonifácio" name="excursoes[endereco_part]"
+            value="">
+            <i class="point icon"></i>
+          </div>
+          <div style="" id="msg_endereco_d" class="ui pointing red basic label">
+            <span id="texto_endereco_d"></span> 
+          </div>
+        </div>
+      </div>
+      <div class="three fields">
+        <div class="field">
+          <label>Estado</label>
+          <select style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[id_estado_dest]" style="" id="estado_select2" class="ui fluid dropdown">
+            <option value="" selected disabled>Estado</option>
+          </select>
+          <div style="" id="msg_estado" class="ui pointing red basic label">
+            <span id="texto_estado_d"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Cidade</label>
+          <select style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[id_cidade_dest]" id="cidade_select2" class="ui fluid dropdown">
             <option value="" selected disabled>Selecione o estado</option>
           </select>
         </div>
@@ -125,7 +156,7 @@
           </div>
           <div class="fields">
             <div id="" style="" class="ui left icon input campo_home">
-              <input name="excursoes[data_part]" id="input_data" type="date" placeholder=""
+              <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[data_part]" id="input_data" type="date" placeholder=""
               value="">
               <i class="calendar icon"></i>
             </div>
@@ -145,7 +176,7 @@
           </div>
           <div class="fields">
             <div id="" style="" class="ui left icon input campo_home">
-              <input name="excursoes[horario_part]" id="input_horario" type="time" placeholder=""
+              <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[horario_part]" id="input_horario" type="time" placeholder=""
               value="">
               <i class="clock icon"></i>
             </div>
@@ -161,12 +192,53 @@
         <div class="field" id="div_date">
           <div class="label_home_desk">
             <div class="">
+              <label id="data_label" style="">Data de chegada</label>
+            </div>
+          </div>
+          <div class="fields">
+            <div id="" style="" class="ui left icon input campo_home">
+              <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[data_dest]" id="input_data_d" type="date" placeholder=""
+              value="">
+              <i class="calendar icon"></i>
+            </div>
+          </div>
+          <center>
+            <div style="" id="msg_data_d" class="ui pointing red basic label">
+              <span id="texto_data_d"></span>
+            </div>
+          </center>
+        </div>
+
+        <div class="field" id="div_date">
+          <div class="label_home_desk">
+            <div class="">
+              <label id="data_label" style="">Horário de chegada</label>
+            </div>
+          </div>
+          <div class="fields">
+            <div id="" style="" class="ui left icon input campo_home">
+              <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[horario_dest]" id="input_horario_d" type="time" placeholder=""
+              value="">
+              <i class="clock icon"></i>
+            </div>
+          </div>
+          <center>
+            <div style="" id="msg_horario_d" class="ui pointing red basic label">
+              <span id="texto_horario_d"></span>
+            </div>
+          </center>
+        </div>
+      </div>
+      <div class="three fields">
+        <div class="field" id="div_date">
+          <div class="label_home_desk">
+            <div class="">
               <label id="data_label" style="">Vagas Disponíveis*</label>
             </div>
           </div>
           <div class="fields">
             <div id="" style="" class="ui left icon input campo_home">
-              <input name="excursoes[vagas_disp]" id="input_vagas" type="number" placeholder=""
+              <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[vagas_disp]" id="input_vagas" type="number" placeholder=""
               value="">
               <i class="users icon"></i>
             </div>
@@ -186,7 +258,7 @@
           </div>
           <div class="fields">
             <div id="" style="" class="ui left icon input campo_home">
-              <input name="excursoes[valor]" id="input_valor" placeholder=""
+              <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" name="excursoes[valor]" id="input_valor" placeholder=""
               value="" type="number" step="0.01" min="0">
               <i class="money icon"></i>
             </div>
@@ -203,16 +275,37 @@
         <div class="field">
           <label>Telefone para Contato</label>
           <div class="ui left icon input">
-            <input autocomplete="off" id="celular" type="text" placeholder="Telefone" name="excursoes[contato]"
-            value="<?php echo $usuario_logado['telefone']; ?>">
+            <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" autocomplete="off" id="telefone" type="text" placeholder="" name="excursoes[contato]"
+            value="<?php 
+            if(isset($usuario_logado['telefone']))
+            {
+               echo $usuario_logado['telefone']; 
+            }
+            ?>">
             <i class="phone icon"></i>
           </div>
         </div>
 
         <div class="field">
+          <label>Celular para Contato</label>
+          <div class="ui left icon input">
+            <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" autocomplete="off" id="celular" type="text" placeholder="Celular" name="excursoes[contato_celular]"
+            value="<?php 
+            if(isset($usuario_logado['celular']))
+            {
+              echo $usuario_logado['celular']; 
+            }
+            ?>">
+            <i class="mobile icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="three fields">
+        <div class="field">
           <label>Email para Contato</label>
           <div class="ui left icon input">
-            <input autocomplete="off" type="text" placeholder="Email" name="excursoes[contato_email]"
+            <input style="border: 0.5px solid rgba(0, 100, 181, 0.45);" autocomplete="off" type="text" placeholder="Email" name="excursoes[contato_email]"
             id="input_email"  value="<?php echo $usuario_logado['email']; ?>">
             <i class="mail icon"></i>
           </div>
@@ -225,8 +318,9 @@
       <div class="field" style="width: 66.66%">
         <div class="field">
           <label>Observações</label>
-          <textarea name="excursoes[observacoes]" rows="4"></textarea>
+          <textarea name="excursoes[observacoes]" rows="4" style="border: 0.5px solid rgba(0, 100, 181, 0.45);"></textarea>
         </div>
+            *Campos obrigatórios 
       </div>
       <div class="actions" style="">
         <div style="" id="btn_criar" class="ui green labeled icon large button">

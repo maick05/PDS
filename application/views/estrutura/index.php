@@ -15,7 +15,7 @@
 <body>
   <div style="" class="ui massive secondary pointing menu" id="menu_fixo">
     <a style="" class="item" id="item_fixed">
-      <button class="menu-abrir"></button>
+      <button id="btn_menu_abrir" class="menu-abrir"></button>
     </a>
     <a style="" class="item" id="item_fixed">
       MyTour
@@ -45,16 +45,16 @@
     </div>
 
     <div style="" class="ui inverted vertical pointing menu" id="menu_lateral">
-      <a class="item">
+      <a class="item" href="<?php echo site_url('home');?>">
         <i style="" class="home icon" id="icon_index"></i>
         Página Inicial
       </a>
       <a class="item" href="<?php echo site_url('buscar_excursoes');?>">
-        <i style="" class="bus icon" id="icon_index"></i>
+        <i style="" class="search icon" id="icon_index"></i>
         Buscar Excursões  
       </a>
       <a class="item" href="<?php echo site_url('minhas_excursoes');?>">
-        <i style="" class="user icon" id="icon_index"></i>
+        <i style="" class="bus icon" id="icon_index"></i>
         Minhas Excursões
       </a>
       <a class="item" href="<?php echo site_url('add_excursao');?>">

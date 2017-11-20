@@ -51,7 +51,47 @@ class DetalhesExcursaoController extends CI_Controller
 	public function ver_inscritos()
 	{
 		$id = $this->input->post("excursao")['id_excursao'];
-		$dados = array('inscritos' => $this->InscricoesModel->verInscritosExcursao($id));
+		
+		$this->load->library('pagination');
+		$config['base_url'] = base_url('ver_inscritos');
+		$config['total_rows'] = $this->InscricoesModel->verInscritosExcursao(0, 0, $id)->num_rows();
+		$config['num_links'] = 8;
+		$config['per_page'] = 20;
+		$config['first_link'] = 'Ínicio';
+		$config['last_link'] = 'Final';
+		$config['full_tag_open'] = '<ul class="ui floated pagination menu">';
+		$config['full_tag_close'] = '</ul>';
+		$config['num_tag_open'] = '<li class="item">';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="item">';
+		$config['cur_tag_close'] = '</li>';
+		$config['next_tag_open'] = '<li class="item">';
+		$config['prev_tag_open'] = '<li class="item">';
+		$config['next_tag_close'] = '&emsp;&emsp;&emsp;</li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['first_tag_open'] = '<li class="item">';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li class="item">';
+		$config['last_tag_close'] = '</li>';
+		$qtd = $config['per_page'];
+
+		($this->uri->segment(2) != '') ? $inicio = $this->uri->segment(2) : $inicio = 0;
+		
+		$this->pagination->initialize($config); 
+
+		$pagination;
+
+		if ($config['total_rows'] > $config['per_page']) 
+		{
+			$pagination = $this->pagination->create_links();
+		}
+		else
+		{
+			$pagination = null;
+		}
+
+		$pagination = null;
+		$dados = array('inscritos' => $this->InscricoesModel->verInscritosExcursao($qtd, $inicio, $id), 'pagination' => $pagination, 'id_exc' => $id);
 		$this->load->template('excursoes/ver_inscritos', '', $dados);
 	}
 
@@ -81,6 +121,7 @@ class DetalhesExcursaoController extends CI_Controller
 
 		$dados = array('excursao' => $excursao, 'id_usuario' => $this->session->userdata('usuario_logado')['id_usuario'], 'status' => $status['status'], 'inscricao' => $status['id_inscricao'], 'msg' => $msg, 'insc_pagseguro' => $status['pagseguro'], 'msg_exc' => $msg_exc, 'rota' => $rota, 'media' => $media, 'minha_av' => $minha_av, 'pag' => $pag);
 		$this->load->template('excursoes/detalhes_excursao', '', $dados);
+		redirect(base_url()."ver_detalhes_excursao/".$id);
 	}
 
 	public function avaliar()
@@ -143,16 +184,16 @@ class DetalhesExcursaoController extends CI_Controller
 		$id = $this->input->post("id_excursao");
 		$name = md5($id.Date("d/m/Y H:i:s").$criador);
 
-   		$configuracao = array(
-   		   'upload_path' => 'assets/img/excursoes/',
-   		   'allowed_types' => 'jpg|png|jpeg',
-   		   'file_name' => $name.'.jpg',
-   		   'max_size' => '30000',
-   		);
+		$configuracao = array(
+			'upload_path' => 'assets/img/excursoes/',
+			'allowed_types' => 'jpg|png|jpeg',
+			'file_name' => $name.'.jpg',
+			'max_size' => '30000',
+		);
 
-   		$this->upload->initialize($configuracao);
+		$this->upload->initialize($configuracao);
 
-   		if ($this->upload->do_upload('url_foto'))
+		if ($this->upload->do_upload('url_foto'))
 		{
 			$caminho = "assets/img/excursoes/".$name.'.jpg';
 			include('application/helpers/m2brimagem.class.php');
@@ -161,8 +202,8 @@ class DetalhesExcursaoController extends CI_Controller
 			if ($valida == 'OK')
 			{
 				$oImg->redimensiona(425,283,'fill');
-			    $oImg->grava($caminho);
-			    return $caminho;
+				$oImg->grava($caminho);
+				return $caminho;
 			}
 			else
 			{

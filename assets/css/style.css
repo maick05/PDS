@@ -13,6 +13,13 @@ body > .grid
   max-width: 450px;
 }
 
+#titulo
+{
+  max-width: 29ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .t1
 {
@@ -350,24 +357,32 @@ div#desc_home
     margin-left: 0em;
     height: ;
   }
-
+  body{
+    opacity: 1.0;
+  }
   div#menu_ativo 
   {
     height: 93.5%;
     left: 0;
     margin-top: 3.55em;
     float: left;
+    transition: left 0.9s ease-out;
+    position: fixed;
+    z-index: 10;
+    margin-top: 3.70em;
+    margin-left: -0.18em;
   }
 
-
-  #menu-ativo:after 
+ div#menu_ativo:after 
   {
     display: block;
     position: fixed;
+    z-index: 10;
     left: 0;
     height: 93.5%;
     transition: left 0.9s ease-out;
-    margin-top: 3.55em;
+    margin-top: 3.70em;
+    margin-left: -0.18em;
   }  
 
   p::html

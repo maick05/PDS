@@ -9,12 +9,13 @@
     {
       var table = document.getElementById('tab_pag');
       var row;
-
+      var i = 1;
       if (table.rows.length > 1) 
       {
-        for (var i = 1; i <= table.rows.length; i++) 
+        var tam = table.rows.length;
+        for(i = tam - 1; i >=1; i--) 
         {
-            table.deleteRow(0);
+          table.deleteRow(i);
         }
       }
 
@@ -45,6 +46,24 @@
   }
   ?>
   <table class="ui celled table">
+    <?php
+    if ($inscritos->num_rows() == 0 ) 
+    {
+      ?>
+      <div class="ui icon message">
+        <i class="Info Circle icon"></i>
+        <div class="content">
+          <div class="header">
+            Não há excursões
+          </div>
+          <p>Não há nenhum inscrito ainda para essa excursão.</p>   
+        </div>
+      </div>
+      <?php
+    }
+    else
+    {
+      ?>
     <thead>
       <tr><th>Nome</th>
         <th>Telefone</th>
@@ -139,27 +158,45 @@
         </tr>
         <?php
       }
+    }
       ?>
     </tbody>
+    <?php
+    if (isset($pagination)) 
+    {
+      ?>
+      <tfoot>
+        <tr><th colspan="7">
+          <?php
+          echo $pagination;
+          ?>
+        </th>
+      </tr>
+    </tfoot>
+    <?php } ?>
   </table>
+  <a href="<?php echo site_url('ver_detalhes_excursao/'.$id_exc);?>"><div style=""  class="ui right blue labeled icon button">
+                Voltar
+                <i class="undo icon"></i>
+              </div></a>
 
   <div class="ui modal" id="modal_pag">
     <div class="header">Transações iniciadas</div>
     <div class="content">
-  <table class="ui celled table" id="tab_pag">
-    <thead>
-      <tr>
-        <th>Data de abertura</th>
-        <th>Situação</th>
-        <th>Data da última atualização</th>
-      </tr>
-    </thead>
+      <table class="ui celled table" id="tab_pag">
+        <thead>
+          <tr>
+            <th>Data de abertura</th>
+            <th>Situação</th>
+            <th>Data da última atualização</th>
+          </tr>
+        </thead>
       </table>
-      </div>
-      <div class="actions" id="actions_rec" style="">
-        <div id="btn_pross" class="ui positive button" style="">Ok</div>
-      </div>
+    </div>
+    <div class="actions" id="actions_rec" style="">
+      <div id="btn_pross" class="ui positive button" style="">Ok</div>
     </div>
   </div>
+</div>
 
 

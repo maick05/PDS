@@ -12,7 +12,7 @@ class PagSeguroController extends CI_Controller
 		$data['itemId1'] = '1';
 		$data['itemQuantity1'] = '1';
 		$data['itemDescription1'] = $this->input->post("nome");
-		$data['itemAmount1'] = '1.50';//$this->input->post("valor");
+		$data['itemAmount1'] = $this->input->post("valor");
 		$data['redirectURL'] = 'http://www.mytour-pds.com/verificar_pagamento';
 		$data['notificationUrl'] = 'http://www.mytour-pds.com/verificar_pagamento';
 

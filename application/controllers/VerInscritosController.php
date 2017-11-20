@@ -21,7 +21,7 @@ class VerInscritosController extends CI_Controller
 
 	public function ver_inscritos($id, $id_exc, $msg)
 	{
-		$dados = array('inscritos' => $this->InscricoesModel->verInscritosExcursao($id_exc), 'msg' => $msg);
+		$dados = array('inscritos' => $this->InscricoesModel->verInscritosExcursao(0, 0, $id_exc), 'msg' => $msg);
 		$this->load->template('excursoes/ver_inscritos', '', $dados);
 	}
 

@@ -1,19 +1,20 @@
 $(document).ready(function()
 {
-	form_edit = document.getElementById('form_alterar');	// Form do cadastro	// Botão de Cadastrar
-
-	input_nome = document.getElementById('input_nome');	// Campo nome
+	form_edit = document.getElementById('form_alterar');
+input_nome = document.getElementById('input_nome');	// Campo nome
 	input_email = document.getElementById('input_email');	
 	input_endereco = document.getElementById('input_endereco');	
 	input_vagas = document.getElementById('input_vagas');	
 	input_horario = document.getElementById('input_horario');
 	input_valor = document.getElementById('input_valor');
 	input_data = document.getElementById('input_data');	
+	input_data_d = document.getElementById('input_data_d');	
 	input_estado = document.getElementById('estado_select');	
 
 
 	msg_nome = document.getElementById('msg_nome');	
 	msg_email = document.getElementById('msg_email'); 
+	msg_data_d = document.getElementById('msg_data_d');
 	msg_data = document.getElementById('msg_data');
 	msg_endereco = document.getElementById('msg_endereco');	
 	msg_vagas = document.getElementById('msg_vagas');	
@@ -23,19 +24,16 @@ $(document).ready(function()
 
 	span_nome = $("#texto_nome");	// texto da mensagem do campo nome
 	span_email = $("#texto_email");	// texto da mensagem do campo email
+	span_data_d = $("#texto_data_d");	// texto da mensagem do campo senha
 	span_data = $("#texto_data");	// texto da mensagem do campo senha
 	span_endereco = $("#texto_endereco");
 	span_vagas = $("#texto_vagas");	
 	span_horario = $("#texto_horario");
 	span_valor = $("#texto_valor");
 	span_estado = $("#texto_estado");
-
-	campos_vazios = 0;
-
 	
-	txt_vazio = "Preencha esse campo por favor";	// Texto para campo vazio
-	txt_email_existe = "Esse email já está sendo usado, por favor insira um email diferente";	// Texto para email que já existe
-	txt_email_invalido = "Email invalido"; //Texto para email invalido
+	txt_vazio = "Preencha esse campo por favor";	
+	txt_email_invalido = "Email invalido"; 
 	txt_data_menor = "Data inferior a data atual";
 
 
@@ -47,17 +45,20 @@ $(document).ready(function()
 			{
 				if (!IsEmpty(input_estado, msg_estado, span_estado, false, true))
 				{
-					if(!IsEmpty(input_data, msg_data, span_data, false, true) && verificaData(input_data))
+					if(!IsEmpty(input_data, msg_data, span_data, false, true) &&  verificaData(input_data, msg_data, span_data))
 					{					
 						if (!IsEmpty(input_horario, msg_horario, span_horario, false, true))
 						{
-							if (!IsEmpty(input_vagas, msg_vagas, span_vagas, false, true) && verificaVaga(input_vagas))
+							if(verificaData(input_data_d, msg_data_d, span_data_d) && verificaDatas())
 							{
-								if (!IsEmpty(input_valor, msg_valor, span_valor, false, true) && verificaValor(input_valor))
+								if (!IsEmpty(input_vagas, msg_vagas, span_vagas, false, true) && verificaVaga(input_vagas))
 								{
-									if (IsEmail(input_email))
+									if (!IsEmpty(input_valor, msg_valor, span_valor, false, true) && verificaValor(input_valor))
 									{
-										form_edit.submit();
+										if (IsEmail(input_email))
+										{
+											form_edit.submit();
+										}
 									}
 								}
 							}
@@ -100,7 +101,7 @@ $(document).ready(function()
 		}
 	}	
 
-	function verificaData(campo)	
+	function verificaData(campo, msg, span)	
 	{
 		if (campo.value) 
 		{
@@ -110,19 +111,46 @@ $(document).ready(function()
 			if (data_atual < data_exc) 
 			{
 				
-				msg_data.style.display = "none";
+				msg.style.display = "none";
 				return true;
 			}
 			else 
 			{
-				msg_data.style.display = "block";
-				span_data.html(txt_data_menor);
+				msg.style.display = "block";
+				span.html(txt_data_menor);
 				return false;
 			}
 		}
 		else
 		{
-			msg_data.style.display = "none";
+			msg.style.display = "none";
+			return true;
+		}
+	}
+
+	function verificaDatas()	
+	{
+		if (input_data_d.value) 
+		{
+			var data = new Date(input_data.value);
+			var data_d = new Date(input_data_d.value);
+			
+			if (data < data_d) 
+			{
+				
+				msg_data_d.style.display = "none";
+				return true;
+			}
+			else 
+			{
+				msg_data_d.style.display = "block";
+				span_data_d.html("A data de chegada não pode ser inferior que a data de partida");
+				return false;
+			}
+		}
+		else
+		{
+			msg_data_d.style.display = "none";
 			return true;
 		}
 	}

@@ -48,7 +48,7 @@
     <h2 id="header_perfil" class="ui dividing header" style="">Meu Perfil</h2>
     <div class="image content" id="img_perfil" style="">
       <div id="div_img_home" class="ui massive image" style="float:">
-        <label style="" id="" for="btn_img_home">
+        <label style="" id="">
           <img id="label_img_home" 
           src="<?php 
           if(isset($usuario_logado['url_foto']) && file_exists($usuario_logado['url_foto']))
@@ -59,10 +59,15 @@
           {
             echo "assets/img/usuarios/user_leg.jpg";
           }
-          ?>
-          ">
+          ?>">
         </label>
-        <input name="url_foto" type="file" accept="image/png, image/jpeg, image/jpg" id="btn_img_home" multiple>
+        <label id="" for="btn_img_home">
+          <div id="" class="ui right gray labeled icon submit button" style="width: 100%; margin-top: 0.4em">
+        Alterar Foto
+        <i class="photo icon"></i>
+      </div>   
+        </label>
+        <input name="url_foto" type="file" accept="image/png, image/jpeg, image/jpg" id="btn_img_home">
       </div>
     </div>
     <div style="" id="desc_perfil" class="description">

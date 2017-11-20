@@ -50,253 +50,263 @@
       <div id="div_img_det" class="ui massive image" style="">
         <form action="<?php echo site_url('alterar_foto'); ?>" id="form_foto" method="POST" style="float:left" enctype="multipart/form-data">
           <input type="hidden" name="id_excursao" value="<?php echo $excursao['id_excursao']?>">
-          <label style="" id="" for="btn_img_home">
-            <img id="label_img_exc"
-            src="<?php 
-            if(isset($excursao['url_foto']) && file_exists($excursao['url_foto']))
-            {
-              echo base_url($excursao['url_foto']);
-            }
-            else
-            {
-              echo base_url('assets/img/excursoes/excursao_padrao.png');
-            }?>">
-          </label>
-          <input name="url_foto" type="file" accept="image/png, image/jpeg, image/jpg" id="btn_img_home" multiple>
-          <div style="margin-top:0.2em; width: 100%" id="btn_foto" class="ui right gray labeled icon button">
-            Alterar Foto
-            <i class="edit icon"></i>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="ui grid" style="">
-      <div class="row">
-        <div class="six wide column">
-          <span id="destaq" style="">Tipo de transporte:</span>
-          <span id="norm" style=""> <?php echo $excursao['tipo_transporte']; ?></span>
-        </div>
-        <div class="three wide column">
-          <span id="destaq" style="">Categoria:</span>
-          <span id="norm" style=""><?php echo $excursao['categoria']; ?></span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="six wide column">
-          <span id="destaq" style="">Data de partida:</span>
-          <span id="norm" style="">
-            <?php
-            $data = new DateTime($excursao['data_part']);
-            $data = $data -> format("d/m/Y");
-            echo $data;
-            ?></span>
-          </div>
-          <div class="six wide column">
-            <span id="destaq" style="">Horário de partida:</span>
-            <span id="norm" style=""><?php echo $excursao['horario_part']; ?></span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="eleven wide column">
-            <span id="destaq" style="">Endereço de partida:</span>
-            <span id="norm" style=""><?php echo $excursao['endereco_part']; ?></span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="six wide column">
-            <span id="destaq" style="">Cidade de partida:</span>
-            <span id="norm" style=""><?php echo $excursao['cidade_nome']; ?></span>
-          </div>
-          <div class="six wide column">
-            <span id="destaq" style="">Estado de partida:</span>
-            <span id="norm" style=""><?php echo $excursao['sigla']; ?></span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="six wide column">
-            <span id="destaq" style="">Valor:</span>
-            <span id="norm" style=""><?php echo "R$".$excursao['valor']; ?></span>
-          </div>
-          <div class="six wide column">
-            <span id="destaq" style="">Vagas:</span>
-            <span id="norm" style=""><?php echo $excursao['vagas_disp']; ?></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- </form> -->
-
-    <div class="desciption" style="margin-top: 8em; left: 0">
-      <p id="destaq">Observações</p>
-      <p><?php echo $excursao['observacoes']; ?></p>
-    </div>
-    <br>
-    <?php
-    if (isset($rota) && $rota)
-    {
-      ?>
-
-      <div id="map" style="width:80%;height:320px;"></div>
-      <script>
-        function myMap() 
-        {
-          var mapCanvas = document.getElementById("map");
-          var myCenter=new google.maps.LatLng(51.508742,-0.120850);
-          var mapOptions = {center: myCenter, zoom: 5};
-          var map = new google.maps.Map(mapCanvas, mapOptions);
-          var marker_pt;
-          var latlngbounds = new google.maps.LatLngBounds();
-
-          $.post("../retornar_pontos",{id_excursao:<?php echo $excursao['id_excursao'];?>}, function(pontos)
+          <img id="label_img_exc"
+          src="<?php 
+          if(isset($excursao['url_foto']) && file_exists($excursao['url_foto']))
           {
-            result = $.parseJSON(pontos);
-            result.forEach(function(e, i)
-            {
-              marker_pt = new google.maps.Marker(
-              {
-                position: new google.maps.LatLng(e.lat, e.long),
-                title: e.tipo,
-                map: map
-              });
+            echo base_url($excursao['url_foto']);
+          }
+          else
+          {
+            echo base_url('assets/img/excursoes/excursao_padrao.png');
+          }?>">
+          <?php 
+          if ($status == "criador") 
+          {
+          ?>
+      
+            <label id="" for="btn_img_home">
+              <div id="" class="ui right gray labeled icon submit button" style="width: 48.5%; margin-top: 0.4em;">
+                Selecionar Foto
+                <i class="photo icon"></i>
+              </div>   
+            </label> 
+            <input name="url_foto" type="file" accept="image/png, image/jpeg, image/jpg" id="btn_img_home" multiple>
+            <div style="margin-top:0.4em; width: 48.5%; f" id="btn_foto" class="ui right orange labeled icon button">
+              Alterar Foto
+              <i class="edit icon"></i>
+            </div>
+        <?php } ?>
+          </form>
+        </div>
+      </div>
+      <div class="ui grid" style="">
+        <div class="row">
+          <div class="six wide column">
+            <span id="destaq" style="">Tipo de transporte:</span>
+            <span id="norm" style=""> <?php echo $excursao['tipo_transporte']; ?></span>
+          </div>
+          <div class="three wide column">
+            <span id="destaq" style="">Categoria:</span>
+            <span id="norm" style=""><?php echo $excursao['categoria']; ?></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="six wide column">
+            <span id="destaq" style="">Data de partida:</span>
+            <span id="norm" style="">
+              <?php
+              $data = new DateTime($excursao['data_part']);
+              $data = $data -> format("d/m/Y");
+              echo $data;
+              ?></span>
+            </div>
+            <div class="six wide column">
+              <span id="destaq" style="">Horário de partida:</span>
+              <span id="norm" style=""><?php echo $excursao['horario_part']; ?></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="eleven wide column">
+              <span id="destaq" style="">Endereço de partida:</span>
+              <span id="norm" style=""><?php echo $excursao['endereco_part']; ?></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="six wide column">
+              <span id="destaq" style="">Cidade de partida:</span>
+              <span id="norm" style=""><?php echo $excursao['cidade_nome']; ?></span>
+            </div>
+            <div class="six wide column">
+              <span id="destaq" style="">Estado de partida:</span>
+              <span id="norm" style=""><?php echo $excursao['sigla']; ?></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="six wide column">
+              <span id="destaq" style="">Valor:</span>
+              <span id="norm" style=""><?php echo "R$".$excursao['valor']; ?></span>
+            </div>
+            <div class="six wide column">
+              <span id="destaq" style="">Vagas:</span>
+              <span id="norm" style=""><?php echo $excursao['vagas_disp']; ?></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- </form> -->
 
-              var infowindow = new google.maps.InfoWindow(
-              {
-                content: e.tipo
-              });
-
-              marker_pt.addListener('click', function()
-              {
-                map.setZoom(8);
-                map.setCenter(new google.maps.LatLng(e.lat, e.long));
-              });
-
-              if (e.tipo == "Ponto de partida" || e.tipo == "Ponto de chegada") 
-              {
-                infowindow.open(map,marker_pt);
-              }          
-
-              latlngbounds.extend(marker_pt.position);
-            });
-            map.fitBounds(latlngbounds);
-          }); 
-        }
-      </script>
-      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtQ0zFPeRkWxK-AKpskEmN7LYXGVbRYGs&callback=myMap"></script>
+      <div class="desciption" style="margin-top: 8em; left: 0">
+        <p id="destaq">Observações</p>
+        <p><?php echo $excursao['observacoes']; ?></p>
+      </div>
+      <br>
       <?php
-      if ($status == "criador") 
+      if (isset($rota) && $rota)
       {
         ?>
-        <form action="<?php echo site_url('alterar_pontos_parada'); ?>" id="form_epp" method="POST" style="float:left">
+
+        <div id="map" style="width:100%;height:350px;"></div>
+        <script>
+          function myMap() 
+          {
+            var mapCanvas = document.getElementById("map");
+            var myCenter=new google.maps.LatLng(51.508742,-0.120850);
+            var mapOptions = {center: myCenter, zoom: 5};
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+            var marker_pt;
+            var latlngbounds = new google.maps.LatLngBounds();
+
+            $.post("../retornar_pontos",{id_excursao:<?php echo $excursao['id_excursao'];?>}, function(pontos)
+            {
+              result = $.parseJSON(pontos);
+              result.forEach(function(e, i)
+              {
+                marker_pt = new google.maps.Marker(
+                {
+                  position: new google.maps.LatLng(e.lat, e.long),
+                  title: e.tipo,
+                  map: map
+                });
+
+                var infowindow = new google.maps.InfoWindow(
+                {
+                  content: e.tipo
+                });
+
+                marker_pt.addListener('click', function()
+                {
+                  map.setZoom(8);
+                  map.setCenter(new google.maps.LatLng(e.lat, e.long));
+                });
+
+                if (e.tipo == "Ponto de partida" || e.tipo == "Ponto de chegada") 
+                {
+                  infowindow.open(map,marker_pt);
+                }          
+
+                latlngbounds.extend(marker_pt.position);
+              });
+              map.fitBounds(latlngbounds);
+            }); 
+          }
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtQ0zFPeRkWxK-AKpskEmN7LYXGVbRYGs&callback=myMap"></script>
+        <?php
+        if ($status == "criador") 
+        {
+          ?>
+          <form action="<?php echo site_url('alterar_pontos_parada'); ?>" id="form_epp" method="POST" style="float:left">
+            <input type="hidden" name="id_excursao" value="<?php echo $excursao['id_excursao']; ?>">
+            <div style="margin-left:; margin-top: 0.5em" id="btn_epp" class="ui right orange labeled icon button">
+              Alterar pontos de paradas
+              <i class="point icon"></i>
+            </div>
+          </form>
+          <?php
+        }
+        ?>
+        <?php
+      }
+      else if ($status == "criador") 
+      {
+        ?>
+        <form action="<?php echo site_url('alterar_pontos_parada'); ?>" id="form_app" method="POST" style="float:left">
           <input type="hidden" name="id_excursao" value="<?php echo $excursao['id_excursao']; ?>">
-          <div style="margin-left:; margin-top: 0.5em" id="btn_epp" class="ui right orange labeled icon button">
-            Alterar pontos de paradas
+          <div style="margin-left:; margin-top: 0.5em" id="btn_app" class="ui right green labeled icon button">
+            Adicionar pontos de paradas
             <i class="point icon"></i>
           </div>
         </form>
         <?php
       }
       ?>
-      <?php
-    }
-    else if ($status == "criador") 
-    {
-      ?>
-      <form action="<?php echo site_url('alterar_pontos_parada'); ?>" id="form_app" method="POST" style="float:left">
-        <input type="hidden" name="id_excursao" value="<?php echo $excursao['id_excursao']; ?>">
-        <div style="margin-left:; margin-top: 0.5em" id="btn_app" class="ui right green labeled icon button">
-          Adicionar pontos de paradas
-          <i class="point icon"></i>
-        </div>
-      </form>
-      <?php
-    }
-    ?>
-    <div style="margin-top: 4em">
-     <h2 id="" class="ui dividing header"></h2>
-     <p style="font-size: 1.1em"><span id="destaq" style="">Criada por:</span>
-       <span id="norm" style=""><?php echo $excursao['criador']; ?></span></p>
-       <p style=""><span id="destaq" style="">Telefone para contato:</span>
-         <span id="norm" style=""><?php echo $excursao['contato']; ?></span></p>
-         <p style=""><span id="destaq" style="">Email para contato:</span>
-           <span id="norm" style=""><?php echo $excursao['contato_email']; ?></span></p>
-           <div id="rating_c" class="ui huge star rating"></div>
-           <!-- <span id="media_c"><?php echo $media['media'];?></span>: -->
-           <span id="num_av"><?php echo $media['numero'];?></span> avaliações
-           <?php
-           if ($status != "criador") 
-           {
-            ?>
-            <br>Sua avaliação:<div id="rating_av"class="ui huge star rating"></div>
-     <?php } ?>
-            <h2 id="" class="ui dividing header"></h2>
-          </div>
-
-          <div class="actions" style="margin-top: 2em; margin-bottom: 2em;">
-            <?php 
-            if ($status == "não inscrito")
-            {
+      <div style="margin-top: 4em">
+       <h2 id="" class="ui dividing header"></h2>
+       <p style="font-size: 1.1em"><span id="destaq" style="">Criada por:</span>
+         <span id="norm" style=""><?php echo $excursao['criador']; ?></span></p>
+         <p style=""><span id="destaq" style="">Telefone para contato:</span>
+           <span id="norm" style=""><?php echo $excursao['contato']; ?></span></p>
+           <p style=""><span id="destaq" style="">Email para contato:</span>
+             <span id="norm" style=""><?php echo $excursao['contato_email']; ?></span></p>
+             <div id="rating_c" class="ui huge star rating"></div>
+             <!-- <span id="media_c"><?php echo $media['media'];?></span>: -->
+             <span id="num_av"><?php echo $media['numero'];?></span> avaliações
+             <?php
+             if ($status != "criador") 
+             {
               ?>
-              <form action="<?php echo site_url('inscrever_se'); ?>" id="form_inscrever" method="POST" >
-                <input type="hidden" name="inscricoes[id_inscrito]" value="<?php echo $id_usuario; ?>">
-                <input type="hidden" name="inscricoes[id_excursao]" value="<?php echo $excursao['id_excursao']; ?>">
-                <div style="" id="btn_inscrever" class="ui right denny green labeled icon button">
-                  Inscrever-se
-                  <i class="checkmark icon"></i>
-                </div>
-              </form>
-              <?php
-            }
-            else if ($status != "criador")
-            {
-              if($status == "pendente")
+              <br>Sua avaliação:<div id="rating_av"class="ui huge star rating"></div>
+              <?php } ?>
+              <h2 id="" class="ui dividing header"></h2>
+            </div>
+
+            <div class="actions" style="margin-top: 2em; margin-bottom: 2em;">
+              <?php 
+              if ($status == "não inscrito")
               {
-                if ($excursao['pagseguro'])
-                {
-                  if (isset($pag) && $pag != "Pagamento aprovado") 
-                  {
-              ?>
-                  Você já iniciou um pagamento para essa excursão, situação atual: <b style="margin-left: 0.5em; text-decoration: underline;"><?php echo $pag ?></b><br><br>
-            <?php 
-                  }
-
-                if(isset($pag) && $pag == "Pagamento aprovado")
-                {
                 ?>
-                <div class="ui label" style="float: left; font-size: 1.2rem"><i class="check icon"></i> Pagamento aprovado </div>
-                <?php
-                }
-                else
-                {
-                  ?>
-                  <input type="hidden" name="inscricao" value="<?php echo $inscricao; ?>">
-                  <input type="hidden" id="id_pagamento" value="<?php echo $inscricao; ?>">
-                  <form style="float: left" id="comprar" action="https://pagseguro.uol.com.br/checkout/v2/payment.html" method="post" onsubmit="
-                  PagSeguroLightbox(this,  
-                  {
-                   success : function(transactionCode) 
-                   {
-                    $.post('../verificar_situacao_pagamento', {id_insc:<?php echo $inscricao;?>}, function(data)
-                    {
-                      
-                    });  
-                  },
-                  abort : function() 
-                  {
-                    $.post('../deletar_pagamento', {id_inscricao:<?php echo $inscricao; ?>, id_excursao:<?php echo $excursao['id_excursao'];?>});
-                  }
-                }); 
-                  return false;
-                  ">
-                  <!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
-                  <input type="hidden" id="code" name="code" value="" />
-                  <input type="hidden" id="psValor"  value="<?php echo $excursao['valor']; ?>" />
-                  <input type="hidden" id="psNome" value="<?php echo $excursao['nome']; ?>" />
-                  <input type="hidden" name="notificationUrl" value="http://www.mytour-pds.com/verificar_pagamento" />
-                  <input type="hidden" id="psId_insc"  value="<?php echo $inscricao; ?>" />
-                  <input type="hidden" name="iot" value="button" />
-                  <input type="image" id="btn_confirmar" src="https://stc.pagseguro.uol.com.br/public/img/botoes/pagamentos/209x48-pagar-assina.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+                <form action="<?php echo site_url('inscrever_se'); ?>" id="form_inscrever" method="POST" >
+                  <input type="hidden" name="inscricoes[id_inscrito]" value="<?php echo $id_usuario; ?>">
+                  <input type="hidden" name="inscricoes[id_excursao]" value="<?php echo $excursao['id_excursao']; ?>">
+                  <div style="" id="btn_inscrever" class="ui right denny green labeled icon button">
+                    Inscrever-se
+                    <i class="checkmark icon"></i>
+                  </div>
                 </form>
-                <?php 
+                <?php
+              }
+              else if ($status != "criador")
+              {
+                if($status == "pendente")
+                {
+                  if ($excursao['pagseguro'])
+                  {
+                    if (isset($pag) && $pag != "Pagamento aprovado") 
+                    {
+                      ?>
+                      Você já iniciou um pagamento para essa excursão, situação atual: <b style="margin-left: 0.5em; text-decoration: underline;"><?php echo $pag ?></b><br><br>
+                      <?php 
+                    }
+
+                    if(isset($pag) && $pag == "Pagamento aprovado")
+                    {
+                      ?>
+                      <div class="ui label" style="float: left; font-size: 1.2rem"><i class="check icon"></i> Pagamento aprovado </div>
+                      <?php
+                    }
+                    else
+                    {
+                      ?>
+                      <input type="hidden" name="inscricao" value="<?php echo $inscricao; ?>">
+                      <input type="hidden" id="id_pagamento" value="<?php echo $inscricao; ?>">
+                      <form style="float: left" id="comprar" action="https://pagseguro.uol.com.br/checkout/v2/payment.html" method="post" onsubmit="
+                      PagSeguroLightbox(this,  
+                      {
+                       success : function(transactionCode) 
+                       {
+                        $.post('../verificar_situacao_pagamento', {id_insc:<?php echo $inscricao;?>}, function(data)
+                        {
+
+                        });  
+                      },
+                      abort : function() 
+                      {
+                        $.post('../deletar_pagamento', {id_inscricao:<?php echo $inscricao; ?>, id_excursao:<?php echo $excursao['id_excursao'];?>});
+                      }
+                    }); 
+                      return false;
+                      ">
+                      <!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
+                      <input type="hidden" id="code" name="code" value="" />
+                      <input type="hidden" id="psValor"  value="<?php echo $excursao['valor']; ?>" />
+                      <input type="hidden" id="psNome" value="<?php echo $excursao['nome']; ?>" />
+                      <input type="hidden" name="notificationUrl" value="http://www.mytour-pds.com/verificar_pagamento" />
+                      <input type="hidden" id="psId_insc"  value="<?php echo $inscricao; ?>" />
+                      <input type="hidden" name="iot" value="button" />
+                      <input type="image" id="btn_confirmar" src="https://stc.pagseguro.uol.com.br/public/img/botoes/pagamentos/209x48-pagar-assina.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+                    </form>
+                    <?php 
                   }
                 }
                 ?>
